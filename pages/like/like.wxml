@@ -1,0 +1,9 @@
+<!--pages/like/like.wxml-->
+<view wx:for="{{6}}" wx:key="*this">
+    <van-card price="10.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg">
+        <view slot="footer">
+            <van-button type="danger" size="mini">取消收藏</van-button>
+        </view>
+    </van-card>
+    <view style="padding-bottom: 3%;"></view>
+</view>

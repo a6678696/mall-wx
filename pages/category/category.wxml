@@ -1,0 +1,12 @@
+<!--pages/category/category.wxml-->
+<search-bar></search-bar>
+<view>
+    <van-search value="{{ value }}" shape="round" background="#ff6200" placeholder="请输入关键词搜索商品" />
+</view>
+<van-tree-select
+  items="{{ items }}"
+  main-active-index="{{ mainActiveIndex }}"
+  active-id="{{ activeId }}"
+  bind:click-nav="onClickNav"
+  bind:click-item="onClickItem"
+/>

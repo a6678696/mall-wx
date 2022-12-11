@@ -1,0 +1,11 @@
+{
+    "usingComponents": {
+        "area-select":"/components/area-select/area-select",
+        "van-field": "@vant/weapp/field/index",
+        "van-image": "@vant/weapp/image/index",
+        "van-button": "@vant/weapp/button/index",
+        "van-popup": "@vant/weapp/popup/index",
+        "van-area": "@vant/weapp/area/index"
+    },
+    "navigationBarTitleText": "新增收货地址"
+}

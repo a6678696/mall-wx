@@ -1,0 +1,13 @@
+{
+    "usingComponents": {
+        "van-card": "@vant/weapp/card/index",
+        "van-submit-bar": "@vant/weapp/submit-bar/index",
+        "van-sticky": "@vant/weapp/sticky/index",
+        "van-radio": "@vant/weapp/radio/index",
+        "van-radio-group": "@vant/weapp/radio-group/index",
+        "van-stepper": "@vant/weapp/stepper/index",
+        "van-button": "@vant/weapp/button/index",
+        "van-notice-bar": "@vant/weapp/notice-bar/index"
+    },
+    "navigationBarTitleText": "购物车"
+}

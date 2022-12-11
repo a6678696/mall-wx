@@ -1,0 +1,8 @@
+{
+    "component": true,
+    "usingComponents": {
+        "van-field": "@vant/weapp/field/index",
+        "van-popup": "@vant/weapp/popup/index",
+        "van-area": "@vant/weapp/area/index"
+    }
+}

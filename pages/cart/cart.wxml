@@ -1,0 +1,26 @@
+<view class="main">
+    <view wx:if="{{hasList}}">
+        <view class="cart-box">
+            <view class="cart-list" wx:for="{{carts}}" wx:key="index">
+                <van-checkbox class="cart-pro-select" checked-color="#ff6200" bind:change="selectList" data-index="{{index}}" value="{{carts[index].selected}}"></van-checkbox>
+                <navigator url="../details/details?id={{item.id}}">
+                    <image class="cart-thumb" src="{{item.image}}"></image>
+                </navigator>
+                <text class="cart-pro-name">{{item.title}}</text>
+                <text class="cart-pro-price">￥{{item.price}}</text>
+                <view class="cart-count-box">
+                    <van-stepper value="{{ item.num }}" button-size="40rpx" bind:plus="addCount" bind:minus="minusCount" bind:blur="changeCount" data-index="{{index}}" integer="true" theme="round"/>
+                </view>
+                <text class="cart-del iconfont icon-cart-delete" bindtap="deleteList" data-index="{{index}}"></text>
+            </view>
+        </view>
+    </view>
+    <view wx:else>
+        <view class="cart-no-data">购物车是空的哦~</view>
+    </view>
+</view>
+<van-submit-bar price="{{ totalPrice*100 }}" button-text="结算" bind:submit="settleAccounts" tip="{{ true }}" label=" ">
+    <van-checkbox checked-color="#ff6200" value="{{ selectAllStatus }}" bind:change="selectAll">全选</van-checkbox>
+</van-submit-bar>
+<van-notify id="van-notify" />
+<van-dialog id="van-dialog" />

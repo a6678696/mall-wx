@@ -1,0 +1,51 @@
+{
+    "entryPagePath": "pages/index/index",
+    "pages": [
+        "pages/index/index",
+        "pages/category/category",
+        "pages/cart/cart",
+        "pages/my/my",
+        "pages/order/order",
+        "pages/like/like",
+        "pages/goods/goods",
+        "pages/goods-list/goods-list",
+        "pages/shoppingCart/shoppingCart",
+        "pages/footprint/footprint",
+        "pages/address/address",
+        "pages/address-add/address-add",
+        "pages/address-modify/address-modify",
+        "pages/search-page/search-page",
+        "pages/confirm-order/confirm-order",
+        "pages/announcement/announcement",
+        "pages/demo/demo"
+    ],
+    "tabBar": {
+        "custom": true,
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "首页"
+            },
+            {
+                "pagePath": "pages/category/category",
+                "text": "分类"
+            },
+            {
+                "pagePath": "pages/my/my",
+                "text": "我的"
+            }
+        ]
+    },
+
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#ff6200",
+        "navigationBarTitleText": "LeDao商城",
+        "navigationBarTextStyle": "white"
+    },
+    "sitemapLocation": "sitemap.json",
+    "usingComponents": {
+        "van-tabbar": "@vant/weapp/tabbar/index",
+        "van-tabbar-item": "@vant/weapp/tabbar-item/index"
+    }
+}

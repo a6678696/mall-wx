@@ -1,0 +1,32 @@
+<!--index.wxml-->
+<view>
+    <search-bar></search-bar>
+</view>
+<my-banner carouselImageList="{{carouselImageList}}"></my-banner>
+<!-- 为了空出一行 -->
+<view style="padding-bottom: 3%;"></view>
+<!-- 轮播图下面的宫格 -->
+<van-grid square gutter="{{ 5 }}">
+    <navigator url="/pages/announcement/announcement">
+        <van-grid-item icon="bullhorn-o" text="公告" />
+    </navigator>
+    <navigator url="/pages/goods-list/goods-list">
+        <van-grid-item icon="new-o" text="新品" />
+    </navigator>
+    <navigator url="/pages/goods-list/goods-list">
+        <van-grid-item icon="hot-o" text="热卖" />
+    </navigator>
+    <navigator url="/pages/goods-list/goods-list">
+        <van-grid-item icon="discount" text="降价" />
+    </navigator>
+</van-grid>
+<!-- 推荐商品 -->
+<view wx:for="{{6}}" wx:key="*this">
+    <!-- 为了空出一行 -->
+    <view style="padding-bottom: 2%;"></view>
+    <navigator url="/pages/goods/goods">
+        <van-card price="10.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg">
+        </van-card>
+    </navigator>
+</view>
+<view style="padding-bottom: 20%;"></view>

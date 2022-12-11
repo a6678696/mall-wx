@@ -1,0 +1,13 @@
+<!--pages/search/search.wxml-->
+<view>
+    <search-bar></search-bar>
+</view>
+<van-dropdown-menu>
+    <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" />
+    <van-dropdown-item value="{{ value2 }}" options="{{ option2 }}" />
+</van-dropdown-menu>
+<view wx:for="{{6}}" wx:key="id">
+    <navigator url="/pages/goods/goods">
+        <van-card price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
+    </navigator>
+</view>

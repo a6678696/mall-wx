@@ -1,0 +1,11 @@
+{
+    "usingComponents": {
+        "van-notify": "@vant/weapp/notify/index",
+        "van-dialog": "@vant/weapp/dialog/index",
+        "van-stepper": "@vant/weapp/stepper/index",
+        "van-submit-bar": "@vant/weapp/submit-bar/index",
+        "van-checkbox": "@vant/weapp/checkbox/index",
+        "van-checkbox-group": "@vant/weapp/checkbox-group/index"
+    },
+    "navigationBarTitleText": "购物车"
+}

@@ -1,0 +1,18 @@
+<!--pages/confirm-order/confirm-order.wxml-->
+<van-cell value="修改收货地址" icon="location-o" is-link border="{{ false }}" catchtap="showOrCloseSelectAddress">
+    <view slot="title">
+        <view class="van-cell-text">
+            <van-tag type="primary">{{addressNow[3]}}</van-tag>
+        </view>
+    </view>
+</van-cell>
+<van-cell-group>
+    <van-cell title="{{addressNow[1]}}" label="{{addressNow[2]}}" border="{{ false }}" />
+</van-cell-group>
+<van-card num="{{item.num}}" price="{{item.price}}" desc="{{item.desc}}" title="{{item.title}}" thumb="{{ item.imageUrl }}" wx:for="{{goodsList}}" wx:key="index"/>
+<view style="padding-bottom: 20%;"></view>
+<van-submit-bar price="{{ totalPrice*100 }}" button-text="提交订单" bind:submit="onSubmit" />
+<van-action-sheet show="{{ show }}" title="标题">
+    <view>内容</view>
+</van-action-sheet>
+<van-action-sheet show="{{ showAddressSelect }}" actions="{{ actions }}" description="选择收货地址" cancel-text="取消" bind:cancel="showOrCloseSelectAddress" bind:click-overlay="showOrCloseSelectAddress" bind:select="onSelectAddress" />

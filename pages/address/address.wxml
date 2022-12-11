@@ -1,0 +1,31 @@
+<!--pages/address/address.wxml-->
+<van-cell-group wx:for="{{addressList}}" wx:key="index">
+    <van-cell>
+        <view slot="title">
+            <van-row>
+                <van-col span="3">
+                    <van-checkbox value="{{ item.isSelected }}" bind:change="changeAddress" data-index="{{index}}" checked-color="#ff6200" style="margin:auto;padding: 10rpx;"></van-checkbox>
+                </van-col>
+                <van-col span="21">
+                    <view style="color: gray;">
+                        <text class="iconfont icon-address-user">{{item.name}}</text>
+                        <text class="iconfont icon-address-phone" style="margin-left: 33rpx;">{{item.phoneNum}}</text>
+                        <van-tag type="warning" style="float: right;" wx:if="{{item.isSelected==true}}">默认地址</van-tag>
+                        <text>\n</text>
+                        <text class="iconfont icon-address-province">{{item.area}}{{item.address}}</text>
+                    </view>
+                    <van-tag type="success">{{item.description}}</van-tag>
+                    <view style="float: right;">
+                        <van-button type="info" icon="edit" size="mini" bindtap="openModifyPage" round></van-button>
+                        <van-button type="danger" icon="delete" size="mini" bindtap="deleteAddress" style="margin-left: 4rpx;" wx:if="{{item.isSelected==false}}" round data-id="{{addressList[index].id}}"></van-button>
+                    </view>
+                </van-col>
+            </van-row>
+        </view>
+    </van-cell>
+</van-cell-group>
+<van-goods-action>
+    <van-goods-action-button url="/pages/address-add/address-add" text="新增收货地址" color="#f35e09" />
+</van-goods-action>
+<van-dialog id="van-dialog" />
+<van-notify id="van-notify" />

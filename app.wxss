@@ -1,0 +1,22 @@
+/**app.wxss**/
+
+/* 全局引入iconfont样式 */
+@import "./styles/iconfont.wxss";
+
+page {
+    background-color: rgb(248, 242, 242);
+    --themeColor: #ff6200;
+    font-size: 34rpx;
+}
+
+page,
+view,
+text,
+swiper,
+swiper-item,
+image,
+navigator {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}

@@ -1,0 +1,17 @@
+<!--custom-tab-bar/index.wxml-->
+<view>
+  <van-tabbar active="{{ active }}" active-color="#f35e09" bind:change="onChange" placeholder="true">
+    <van-tabbar-item icon="wap-home-o" data-page="index" data-target="/pages/index/index">
+      首页
+    </van-tabbar-item>
+    <van-tabbar-item icon="apps-o" data-page="category" data-target="/pages/category/category">
+      分类
+    </van-tabbar-item>
+    <van-tabbar-item icon="shopping-cart-o" data-page="cart">
+      购物车
+    </van-tabbar-item>
+    <van-tabbar-item icon="manager-o" data-page="my" data-target="/pages/my/my">
+      我的
+    </van-tabbar-item>
+  </van-tabbar>
+</view>

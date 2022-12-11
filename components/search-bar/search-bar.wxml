@@ -1,0 +1,6 @@
+<!--components/search-bar/search-bar.wxml-->
+<view class="search_bar">
+    <navigator url="/pages/search-page/search-page">
+        <text>搜索商品</text>
+    </navigator>
+</view>

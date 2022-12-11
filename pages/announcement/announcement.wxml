@@ -1,0 +1,6 @@
+<!--pages/announcement/announcement.wxml-->
+<van-collapse accordion value="{{ activeName }}" bind:change="onChange">
+  <van-collapse-item wx:for="{{announcementList}}" wx:key="id" title="{{item.title}}" name="{{item.name}}">
+    {{item.content}}
+  </van-collapse-item>
+</van-collapse>

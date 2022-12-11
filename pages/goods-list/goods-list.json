@@ -1,0 +1,9 @@
+{
+    "usingComponents": {
+        "search-bar": "/components/search-bar/search-bar",
+        "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",
+        "van-dropdown-item": "@vant/weapp/dropdown-item/index",
+        "van-card": "@vant/weapp/card/index"
+    },
+    "navigationBarTitleText": "商品列表"
+}

@@ -1,0 +1,7 @@
+<!--components/area-select/area-select.wxml-->
+<van-cell-group bindtap="showPopup">
+    <van-field value="{{ area }}" placeholder="请选择省市区" label="省市区" title-width="4em" is-link="true" readonly/>
+</van-cell-group>
+<van-popup show="{{ show }}" bind:close="onClose" position="bottom">
+    <van-area area-list="{{ areaList }}" columns-num="{{ 3 }}" title="选择省市区" value="{{value}}" bind:cancel="onCancel" bind:confirm="onConfirm" bind:change="onChange"/>
+</van-popup>

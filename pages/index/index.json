@@ -1,0 +1,9 @@
+{
+    "usingComponents": {
+        "my-banner": "/components/banner/banner",
+        "search-bar": "/components/search-bar/search-bar",
+        "van-grid": "@vant/weapp/grid/index",
+        "van-grid-item": "@vant/weapp/grid-item/index",
+        "van-card": "@vant/weapp/card/index"
+    }
+}
