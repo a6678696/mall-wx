@@ -3,5 +3,6 @@
     "projectname": "mall-wx",
     "setting": {
         "compileHotReLoad": false
-    }
+    },
+    "condition": {}
 }

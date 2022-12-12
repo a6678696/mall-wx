@@ -1,0 +1,9 @@
+.view_blrank1 {
+  padding-bottom: 3%;
+}
+.view_blrank2 {
+  padding-bottom: 2%;
+}
+.view_blrank3 {
+  padding-bottom: 20%;
+}

@@ -1,1 +1,19 @@
-/* pages/address/address.wxss */
+.van_row .van_col_checkbox van-checkbox {
+  margin: auto;
+  padding: 10rpx;
+}
+.van_row .van_col_address_content .address_content_text {
+  color: gray;
+}
+.van_row .van_col_address_content .address_content_text .name {
+  margin-left: 33rpx;
+}
+.van_row .van_col_address_content .address_content_text van-tag {
+  float: right;
+}
+.van_row .van_col_address_content .address_btn {
+  float: right;
+}
+.van_row .van_col_address_content .address_btn .delete_btn {
+  margin-left: 5rpx;
+}

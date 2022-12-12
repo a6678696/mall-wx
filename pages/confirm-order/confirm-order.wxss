@@ -1,1 +1,3 @@
-/* pages/confirm-order/confirm-order.wxss */
+.view_blank {
+  padding-bottom: 20%;
+}

@@ -5,5 +5,5 @@
             <van-button type="danger" size="mini">删除</van-button>
         </view>
     </van-card>
-    <view style="padding-bottom: 3%;"></view>
+    <view class="view_blank"></view>
 </view>

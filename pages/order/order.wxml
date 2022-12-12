@@ -1,32 +1,32 @@
 <!--pages/order/order.wxml-->
-<view style="padding-bottom: 1%;"></view>
+<view class="view_blrank"></view>
 <van-tabs active="{{ active }}" bind:change="onChange" title-active-color="#f35e09" color="#f35e09">
   <van-tab title="已完成">
     <van-collapse accordion value="{{ activeName }}" bind:change="onChange">
             <van-collapse-item title="2022-12-05 21:09:35" name="1">
                 <van-tag type="primary">订单号: 2022120521293612</van-tag>
-                <van-tag type="success" style="margin-left: 6rpx;">总价: ￥333</van-tag>
+                <van-tag type="success" class="tags_blank">总价: ￥333</van-tag>
                 <view wx:for="{{3}}" wx:key="*this">
                     <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
                 </view>
             </van-collapse-item>
             <van-collapse-item title="2022-12-04 11:09:33" name="2">
                 <van-tag type="primary">订单号: 2022120521293612</van-tag>
-                <van-tag type="success" style="margin-left: 6rpx;">总价: ￥333</van-tag>
+                <van-tag type="success" class="tags_blank">总价: ￥333</van-tag>
                 <view wx:for="{{3}}" wx:key="*this">
                     <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
                 </view>
             </van-collapse-item>
             <van-collapse-item title="2022-12-05 13:09:30" name="3">
                 <van-tag type="primary">订单号: 2022120521293612</van-tag>
-                <van-tag type="success" style="margin-left: 6rpx;">总价: ￥333</van-tag>
+                <van-tag type="success" class="tags_blank">总价: ￥333</van-tag>
                 <view wx:for="{{3}}" wx:key="*this">
                     <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
                 </view>
             </van-collapse-item>
             <van-collapse-item title="2022-12-05 13:09:30" name="4">
                 <van-tag type="primary">订单号: 2022120521293612</van-tag>
-                <van-tag type="success" style="margin-left: 6rpx;">总价: ￥333</van-tag>
+                <van-tag type="success" class="tags_blank">总价: ￥333</van-tag>
                 <view wx:for="{{3}}" wx:key="*this">
                     <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
                 </view>
@@ -37,21 +37,21 @@
     <van-collapse accordion value="{{ activeName }}" bind:change="onChange">
             <van-collapse-item title="2022-12-05 21:09:35" name="1">
                 <van-tag type="primary">订单号: 2022120521293612</van-tag>
-                <van-tag type="success" style="margin-left: 6rpx;">总价: ￥333</van-tag>
+                <van-tag type="success" class="tags_blank">总价: ￥333</van-tag>
                 <view wx:for="{{3}}" wx:key="*this">
                     <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
                 </view>
             </van-collapse-item>
             <van-collapse-item title="2022-12-04 11:09:33" name="2">
                 <van-tag type="primary">订单号: 2022120521293612</van-tag>
-                <van-tag type="success" style="margin-left: 6rpx;">总价: ￥333</van-tag>
+                <van-tag type="success" class="tags_blank">总价: ￥333</van-tag>
                 <view wx:for="{{3}}" wx:key="*this">
                     <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
                 </view>
             </van-collapse-item>
             <van-collapse-item title="2022-12-05 13:09:30" name="3">
                 <van-tag type="primary">订单号: 2022120521293612</van-tag>
-                <van-tag type="success" style="margin-left: 6rpx;">总价: ￥333</van-tag>
+                <van-tag type="success" class="tags_blank">总价: ￥333</van-tag>
                 <view wx:for="{{3}}" wx:key="*this">
                     <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
                 </view>
@@ -62,14 +62,14 @@
     <van-collapse accordion value="{{ activeName }}" bind:change="onChange">
             <van-collapse-item title="2022-12-05 21:09:35" name="1">
                 <van-tag type="primary">订单号: 2022120521293612</van-tag>
-                <van-tag type="success" style="margin-left: 6rpx;">总价: ￥333</van-tag>
+                <van-tag type="success" class="tags_blank">总价: ￥333</van-tag>
                 <view wx:for="{{3}}" wx:key="*this">
                     <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
                 </view>
             </van-collapse-item>
             <van-collapse-item title="2022-12-04 11:09:33" name="2">
                 <van-tag type="primary">订单号: 2022120521293612</van-tag>
-                <van-tag type="success" style="margin-left: 6rpx;">总价: ￥333</van-tag>
+                <van-tag type="success" class="tags_blank">总价: ￥333</van-tag>
                 <view wx:for="{{3}}" wx:key="*this">
                     <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
                 </view>
@@ -80,7 +80,7 @@
     <van-collapse accordion value="{{ activeName }}" bind:change="onChange">
             <van-collapse-item title="2022-12-05 21:09:35" name="1">
                 <van-tag type="primary">订单号: 2022120521293612</van-tag>
-                <van-tag type="success" style="margin-left: 6rpx;">总价: ￥333</van-tag>
+                <van-tag type="success" class="tags_blank">总价: ￥333</van-tag>
                 <view wx:for="{{3}}" wx:key="*this">
                     <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
                 </view>

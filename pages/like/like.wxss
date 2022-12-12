@@ -1,1 +1,3 @@
-/* pages/like/like.wxss */
+.view_blrank {
+  padding-bottom: 3%;
+}

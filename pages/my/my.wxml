@@ -1,5 +1,5 @@
 <!--pages/my/my.wxml-->
-<view style="text-align: center;margin-top: 22rpx;">
+<view class="view_image">
     <van-image round width="5rem" height="5rem" src="https://img.yzcdn.cn/vant/cat.jpeg" />
 </view>
 <view>
