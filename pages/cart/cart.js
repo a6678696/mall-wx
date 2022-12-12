@@ -1,6 +1,7 @@
-// pages/cart/cart.js
+// pages/shoppingCart/shoppingCart.js
 import Notify from '@vant/weapp/notify/notify';
 import Dialog from '@vant/weapp/dialog/dialog';
+import Toast from '@vant/weapp/toast/toast';
 
 Page({
 
@@ -32,46 +33,56 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
+        Toast({
+            message: '数量设置为 0 即可删除商品',
+            duration: 2000,
+            position: 'top'
+        });
         this.setData({
             hasList: true,
             carts: [{
                     id: 1,
-                    title: '新鲜芹菜 半斤新鲜芹菜 半斤新鲜芹菜 半斤新鲜芹菜 半斤新鲜芹菜 半斤新鲜芹菜 半斤新鲜芹菜 半斤新鲜芹菜 半斤新鲜芹菜 半斤新鲜芹菜 半斤',
-                    image: 'https://image.zoutl.cn/hexo-blog/blogCoverImage/1.jpg',
-                    num: 4,
-                    price: 0.01,
+                    title: '华为nova9 SE',
+                    desc: '商品描述商品描述商品描述',
+                    image: '/images/cart/1.jpg',
+                    num: 1,
+                    price: 2199,
                     selected: false
                 },
                 {
                     id: 2,
-                    title: '素米 500g',
-                    image: 'https://image.zoutl.cn/hexo-blog/blogCoverImage/2.jpg',
+                    title: '华为P50 Pro',
+                    desc: '商品描述商品描述商品描述',
+                    image: '/images/cart/2.jpg',
                     num: 1,
-                    price: 0.03,
+                    price: 5488,
                     selected: false
                 },
                 {
                     id: 3,
-                    title: '素米 500g',
-                    image: 'https://image.zoutl.cn/hexo-blog/blogCoverImage/3.jpg',
+                    title: '游侠G15游戏本',
+                    desc: '商品描述商品描述商品描述',
+                    image: '/images/cart/3.jpg',
                     num: 1,
-                    price: 0.03,
+                    price: 6429,
                     selected: false
                 },
                 {
                     id: 4,
-                    title: '素米 500g',
-                    image: 'https://image.zoutl.cn/hexo-blog/blogCoverImage/4.jpg',
+                    title: 'iPhone 12',
+                    desc: '商品描述商品描述商品描述',
+                    image: '/images/cart/4.jpg',
                     num: 1,
-                    price: 0.03,
+                    price: 4699,
                     selected: false
                 },
                 {
                     id: 5,
-                    title: '素米 500g',
-                    image: 'https://image.zoutl.cn/hexo-blog/blogCoverImage/5.jpg',
+                    title: '一加10 Pro',
+                    desc: '商品描述商品描述商品描述',
+                    image: '/images/cart/5.jpg',
                     num: 1,
-                    price: 0.03,
+                    price: 3999,
                     selected: false
                 }
             ]
@@ -201,29 +212,49 @@ Page({
         const index = e.currentTarget.dataset.index;
         let carts = this.data.carts;
         let num = carts[index].num;
-        if (num <= 1) {
-            return false;
-        }
         num = num - 1;
         carts[index].num = num;
         this.setData({
             carts: carts
         });
-        this.getTotalPrice();
-    },
-
-    /**
-     * 焦点离开输入框时触发
-     * @param {*} e 
-     */
-    changeCount(e) {
-        const index = e.currentTarget.dataset.index;
-        let carts = this.data.carts;
-        carts[index].num = e.detail.value;
-        this.setData({
-            carts: carts
-        });
-        this.getTotalPrice();
+        if (num === 0) {
+            Dialog.confirm({
+                    title: '提示',
+                    message: '你确定从购物车中删除这个商品吗？',
+                })
+                .then(() => {
+                    let carts = this.data.carts;
+                    const index = e.currentTarget.dataset.index;
+                    const name = carts[index].title;
+                    Notify({
+                        type: 'danger',
+                        duration: 1500,
+                        message: '商品\"' + name + '\"已从购物车中删除'
+                    });
+                    carts.splice(index, 1);
+                    this.setData({
+                        carts: carts
+                    });
+                    if (!carts.length) {
+                        this.setData({
+                            hasList: false,
+                            totalPrice: 0,
+                            selectAllStatus: false
+                        });
+                    } else {
+                        this.getTotalPrice();
+                    }
+                })
+                .catch(() => {
+                    carts[index].num = 1;
+                    this.setData({
+                        carts: carts
+                    });
+                    this.getTotalPrice();
+                });
+        } else {
+            this.getTotalPrice();
+        }
     },
 
     /**
@@ -255,9 +286,9 @@ Page({
         }
     },
 
-    settleAccounts(){
+    settleAccounts() {
         wx.navigateTo({
-          url: '/pages/confirm-order/confirm-order',
+            url: '/pages/confirm-order/confirm-order',
         })
     }
 })

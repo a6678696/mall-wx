@@ -4,10 +4,10 @@
     <van-cell title="【旗舰新品】HUAWEI/华为Mate50 Pro 曲面屏超光变XMAGE影像鸿蒙3.0拍照摄影游戏新款智能手机华为官方旗舰店" />
     <van-cell title="￥ 5999" value="销量: 5545" />
 </view>
-<view style="padding-bottom: 3%;"></view>
+<view class="view_blank"></view>
 <van-tabs swipeable>
     <van-tab title="商品详情">
-        <view style="background-color: white;margin-top: 13rpx;">
+        <view class="goods_details">
             <van-row>
                 <van-col span="23" offset="1">
                     <text>商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情</text>
@@ -16,26 +16,26 @@
         </view>
     </van-tab>
     <van-tab title="用户评论">
-        <view style="background-color: white;margin-top: 13rpx;" wx:for="{{6}}" wx:key="id">
+        <view class="view_comment" wx:for="{{6}}" wx:key="id">
             <van-row>
                 <van-col span="5" offset="1">
                     <van-image width="5rem" height="5rem" src="https://img.yzcdn.cn/vant/cat.jpeg" round />
                 </van-col>
                 <van-col span="16" offset="2">
-                    <van-rate allow-half readonly value="{{ stars }}" color="#ff6200" size="38rpx" /><text style="color: #ff6200;"> {{stars}}</text>
+                    <van-rate allow-half readonly value="{{ stars }}" color="#ff6200" size="38rpx" /><text class="text_stars"> {{stars}}</text>
                     <text>\n</text>
                     <text>我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论</text>
                     <text>\n</text>
-                    <text style="float: right;color: gray;">2022-12-09 03:36:32</text>
+                    <text class="text_time">2022-12-09 03:36:32</text>
                 </van-col>
             </van-row>
         </view>
     </van-tab>
 </van-tabs>
-<view style="padding-bottom: 20%;"></view>
+<view class="view_blank2"></view>
 <van-goods-action>
+    <van-goods-action-icon icon="wap-home-o" text="首页" url="/pages/index/index" link-type="redirectTo"/>
     <van-goods-action-icon icon="cart-o" text="购物车" info="5" url="/pages/cart/cart"/>
-    <van-goods-action-icon icon="shop-o" text="店铺" />
     <van-goods-action-button text="加入购物车" type="warning" />
     <van-goods-action-button text="立即购买" />
 </van-goods-action>

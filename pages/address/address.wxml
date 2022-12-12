@@ -1,23 +1,23 @@
 <!--pages/address/address.wxml-->
-<van-cell-group wx:for="{{addressList}}" wx:key="index">
-    <van-cell>
+<van-cell-group>
+    <van-cell wx:for="{{addressList}}" wx:key="index">
         <view slot="title">
-            <van-row>
-                <van-col span="3">
-                    <van-checkbox value="{{ item.isSelected }}" bind:change="changeAddress" data-index="{{index}}" checked-color="#ff6200" style="margin:auto;padding: 10rpx;"></van-checkbox>
+            <van-row class="van_row">
+                <van-col span="2" class="van_col_checkbox">
+                    <van-checkbox value="{{ item.isSelected }}" bind:change="changeAddress" data-index="{{index}}" checked-color="#ff6200"></van-checkbox>
                 </van-col>
-                <van-col span="21">
-                    <view style="color: gray;">
-                        <text class="iconfont icon-address-user">{{item.name}}</text>
-                        <text class="iconfont icon-address-phone" style="margin-left: 33rpx;">{{item.phoneNum}}</text>
-                        <van-tag type="warning" style="float: right;" wx:if="{{item.isSelected==true}}">默认地址</van-tag>
+                <van-col span="22" class="van_col_address_content">
+                    <view class="address_content_text">
+                        <text class="iconfont icon-address-phone">{{item.phoneNum}}</text>
+                        <text class="iconfont icon-address-user name">{{item.name}}</text>
+                        <van-tag type="warning" wx:if="{{item.isSelected==true}}">默认地址</van-tag>
                         <text>\n</text>
                         <text class="iconfont icon-address-province">{{item.area}}{{item.address}}</text>
                     </view>
                     <van-tag type="success">{{item.description}}</van-tag>
-                    <view style="float: right;">
+                    <view class="address_btn">
                         <van-button type="info" icon="edit" size="mini" bindtap="openModifyPage" round></van-button>
-                        <van-button type="danger" icon="delete" size="mini" bindtap="deleteAddress" style="margin-left: 4rpx;" wx:if="{{item.isSelected==false}}" round data-id="{{addressList[index].id}}"></van-button>
+                        <van-button class="delete_btn" type="danger" icon="delete" size="mini" bindtap="deleteAddress" wx:if="{{item.isSelected==false}}" round data-id="{{addressList[index].id}}"></van-button>
                     </view>
                 </van-col>
             </van-row>

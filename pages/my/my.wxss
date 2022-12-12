@@ -1,1 +1,4 @@
-/* pages/my/my.wxss */
+.view_image {
+  text-align: center;
+  margin-top: 12rpx;
+}

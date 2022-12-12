@@ -9,15 +9,13 @@
         "pages/like/like",
         "pages/goods/goods",
         "pages/goods-list/goods-list",
-        "pages/shoppingCart/shoppingCart",
         "pages/footprint/footprint",
         "pages/address/address",
         "pages/address-add/address-add",
         "pages/address-modify/address-modify",
         "pages/search-page/search-page",
         "pages/confirm-order/confirm-order",
-        "pages/announcement/announcement",
-        "pages/demo/demo"
+        "pages/announcement/announcement"
     ],
     "tabBar": {
         "custom": true,

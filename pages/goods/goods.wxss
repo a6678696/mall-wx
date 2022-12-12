@@ -1,0 +1,18 @@
+.view_blank {
+  padding-bottom: 3%;
+}
+.goods_details,
+.view_comment {
+  background-color: white;
+  margin-top: 13rpx;
+}
+.text_stars {
+  color: #ff6200;
+}
+.text_time {
+  float: right;
+  color: gray;
+}
+.view_blank2 {
+  padding-bottom: 20%;
+}

@@ -1,1 +1,8 @@
-/* pages/address-add/address-add.wxss */
+.image {
+  text-align: center;
+  margin-top: 10rpx;
+}
+.save_btn {
+  text-align: center;
+  margin-top: 17rpx;
+}

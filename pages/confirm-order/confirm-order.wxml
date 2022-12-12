@@ -10,7 +10,7 @@
     <van-cell title="{{addressNow[1]}}" label="{{addressNow[2]}}" border="{{ false }}" />
 </van-cell-group>
 <van-card num="{{item.num}}" price="{{item.price}}" desc="{{item.desc}}" title="{{item.title}}" thumb="{{ item.imageUrl }}" wx:for="{{goodsList}}" wx:key="index"/>
-<view style="padding-bottom: 20%;"></view>
+<view class="view_blank"></view>
 <van-submit-bar price="{{ totalPrice*100 }}" button-text="提交订单" bind:submit="onSubmit" />
 <van-action-sheet show="{{ show }}" title="标题">
     <view>内容</view>
