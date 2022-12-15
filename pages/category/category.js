@@ -7,87 +7,7 @@ Page({
     data: {
         mainActiveIndex: 0,
         activeId: null,
-        items: [{
-                // 导航名称
-                text: '数码',
-                // 禁用选项
-                disabled: false,
-                // 该导航下所有的可选项
-                children: [{
-                        // 名称
-                        text: '手机',
-                        // id，作为匹配选中状态的标识
-                        id: 1
-                    },
-                    {
-                        text: '电脑',
-                        id: 2
-                    },
-                    {
-                        text: '平板',
-                        id: 3
-                    },
-                    {
-                        text: '相机',
-                        id: 4
-                    },
-                    {
-                        text: '生活家电',
-                        id: 5
-                    },
-                    {
-                        text: '大家电',
-                        id: 6
-                    },
-                    {
-                        text: '个人家电',
-                        id: 7
-                    },
-                    {
-                        text: '休闲家电',
-                        id: 8
-                    },
-                    {
-                        text: '数码配件',
-                        id: 9
-                    }
-                ]
-            },
-            {
-                // 导航名称
-                text: '美食',
-                // 禁用选项
-                disabled: false,
-                // 该导航下所有的可选项
-                children: [{
-                        // 名称
-                        text: '休闲零食',
-                        // id，作为匹配选中状态的标识
-                        id: 1
-                    },
-                    {
-                        text: '粮油米面',
-                        id: 2
-                    },
-                    {
-                        text: '茗茶冲饮',
-                        id: 3
-                    },
-                    {
-                        text: '各地特产',
-                        id: 4
-                    },
-                    {
-                        text: '各类坚果',
-                        id: 5
-                    },
-                    {
-                        text: '生鲜蔬果',
-                        id: 6
-                    }
-                ]
-            }
-        ]
+        items: []
     },
 
     /**
@@ -109,6 +29,37 @@ Page({
      */
     onShow() {
         this.getTabBar().init(1);
+        this.loadData();
+    },
+
+    loadData() {
+        let _this = this;
+        let items = new Array();
+        wx.request({
+            url: 'http://localhost:8080/bigType/getAllBigType',
+            method: 'GET',
+            success(res) {
+                let allBigTypeList = res.data.allBigTypeList;
+                if (allBigTypeList.length > 0) {
+                    for (let i = 0; i < allBigTypeList.length; i++) {
+                        items[i] = {
+                            text: allBigTypeList[i].name,
+                            disabled: false,
+                            children: []
+                        }
+                        for (let j = 0; j < allBigTypeList[i].smallTypeList.length; j++) {
+                            items[i].children[j] = {
+                                text: allBigTypeList[i].smallTypeList[j].name,
+                                id: allBigTypeList[i].smallTypeList[j].id
+                            }
+                        }
+                    }
+                    _this.setData({
+                        items: items
+                    })
+                }
+            }
+        })
     },
 
     /**
@@ -158,11 +109,12 @@ Page({
         detail = {}
     }) {
         const activeId = this.data.activeId === detail.id ? null : detail.id;
+        console.log(detail.id);
         this.setData({
             activeId
         });
         wx.navigateTo({
-          url: '/pages/goods-list/goods-list',
+            url: '/pages/goods-list/goods-list',
         })
     }
 })

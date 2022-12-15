@@ -100,7 +100,6 @@ Page({
             },
             success(result) {
                 announcementList = result.data.announcementList;
-
                 if (announcementList.length > 0) {
                     for (let i = 0; i < announcementList.length; i++) {
                         announcementList[i] = {
