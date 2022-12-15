@@ -1,28 +1,17 @@
 // pages/announcement/announcement.js
+import Notify from '@vant/weapp/notify/notify';
+
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        activeName: 1,
-        announcementList:[
-            {
-                title:'公告1',
-                content:'公告1公告1公告1公告1公告1公告1公告1公告1公告1公告1公告1',
-                name:1
-            },
-            {
-                title:'公告2',
-                content:'公告2公告2公告2公告2公告2公告2公告2公告2公告2公告2公告2公告2公告2公告2公告2',
-                name:2
-            },
-            {
-                title:'公告3',
-                content:'公告3公告3公告3公告3公告3公告3公告3公告3公告3公告3公告3',
-                name:3
-            }
-        ]
+        activeName: 0,
+        announcementList: [],
+        currentPage: 1,
+        pageSize: 12,
+        pageNum: 0
     },
 
     /**
@@ -43,7 +32,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-
+        this.loadData();
     },
 
     /**
@@ -64,14 +53,24 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh() {
-
+        if (this.data.currentPage > 1) {
+            this.setData({
+                currentPage: this.data.currentPage - 1
+            });
+            this.loadData();
+        }else{
+            Notify({ type: 'primary', message: '当前已经是第一页了' });
+        }
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
     onReachBottom() {
-
+        this.setData({
+            currentPage: this.data.currentPage + 1
+        });
+        this.loadData();
     },
 
     /**
@@ -86,4 +85,37 @@ Page({
             activeName: event.detail,
         });
     },
+
+    loadData() {
+        let announcementList;
+        let _this = this;
+        let currentPage = this.data.currentPage;
+        let pageSize = this.data.pageSize;
+        wx.request({
+            url: 'http://localhost:8080/announcement/list',
+            method: 'GET',
+            data: {
+                page: currentPage,
+                size: pageSize
+            },
+            success(result) {
+                announcementList = result.data.announcementList;
+
+                if (announcementList.length > 0) {
+                    for (let i = 0; i < announcementList.length; i++) {
+                        announcementList[i] = {
+                            name: i,
+                            id: announcementList[i].id,
+                            title: announcementList[i].title,
+                            content: announcementList[i].content,
+                            addDate: announcementList[i].addDate
+                        };
+                    }
+                    _this.setData({
+                        announcementList: announcementList
+                    });
+                }
+            }
+        })
+    }
 })
