@@ -1,29 +1,67 @@
 // pages/search/search.js
+import {
+    getBaseUrl,
+    requestUtil
+} from '../../utils/requestUtil.js'
+
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        option1: [
-          { text: '全部商品', value: 0 },
-          { text: '新款商品', value: 1 },
-          { text: '活动商品', value: 2 },
-        ],
-        option2: [
-          { text: '默认排序', value: 'a' },
-          { text: '好评排序', value: 'b' },
-          { text: '销量排序', value: 'c' },
-        ],
-        value1: 0,
-        value2: 'a',
-      },
+        baseUrl: '',
+        goodsList: []
+    },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+        const baseUrl = getBaseUrl();
+        this.setData({
+            baseUrl
+        });
+        if (options.smallTypeId !== undefined) {
+            this.loadDataCategory(options.smallTypeId);
+        }
+        if (options.searchWord !== undefined) {
+            this.loadDataSearchGoods(options.searchWord);
+        }
+    },
 
+    // 分类页面使用
+    loadDataCategory(smallTypeId) {
+        requestUtil({
+            url: '/goods/listNoPage',
+            method: 'GET',
+            data: {
+                smallTypeId: smallTypeId
+            }
+        }).then(res => {
+            this.setData({
+                goodsList: res.data.goodsList
+            })
+        }).catch(err => {
+
+        })
+    },
+
+    // 搜索商品时使用
+    loadDataSearchGoods(searchWord){
+        requestUtil({
+            url: '/goods/listNoPage',
+            method: 'GET',
+            data: {
+                name: searchWord
+            }
+        }).then(res => {
+            this.setData({
+                goodsList: res.data.goodsList
+            })
+        }).catch(err => {
+
+        })
     },
 
     /**

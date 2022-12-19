@@ -1,4 +1,9 @@
 // pages/goods/goods.js
+// 引入请求后端工具类
+import {
+    requestUtil
+} from '../../utils/requestUtil.js'
+
 Page({
 
     /**
@@ -8,7 +13,7 @@ Page({
         goodsName: '',
         price: 0,
         salesVolume: 0,
-        details:'',
+        details: '',
         stars: 4.5,
         swiperImageList: []
     },
@@ -17,27 +22,35 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-        let _this = this;
+        this.loadData(options.id);
+    },
+
+    //加载数据
+    loadData(id) {
         let swiperImageList = [];
-        wx.request({
-            url: 'http://localhost:8080/goods/findById?id=' + options.id,
+        requestUtil({
+            url: '/goods/findById',
             method: 'GET',
-            success(res) {
-                for (let i = 0; i < res.data.goods.swiperImageNameList.length; i++) {
-                    if (res.data.goods.swiperImageNameList[i] !== '') {
-                        swiperImageList[i] = {
-                            imageUrl: res.data.goods.swiperImageNameList[i]
-                        }
+            data: {
+                id: id
+            }
+        }).then(res => {
+            for (let i = 0; i < res.data.goods.swiperImageNameList.length; i++) {
+                if (res.data.goods.swiperImageNameList[i] !== '') {
+                    swiperImageList[i] = {
+                        imageUrl: res.data.goods.swiperImageNameList[i]
                     }
                 }
-                _this.setData({
-                    goodsName: res.data.goods.name,
-                    price: res.data.goods.price,
-                    salesVolume: res.data.goods.salesVolume,
-                    swiperImageList: swiperImageList,
-                    details: res.data.goods.details.replace(/\<img/gi, '<img style="max-width:100%;height:auto"'),
-                })
             }
+            this.setData({
+                goodsName: res.data.goods.name,
+                price: res.data.goods.price,
+                salesVolume: res.data.goods.salesVolume,
+                swiperImageList: swiperImageList,
+                details: res.data.goods.details.replace(/\<img/gi, '<img style="max-width:100%;height:auto"'),
+            })
+        }).catch(err => {
+
         })
     },
 

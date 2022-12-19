@@ -1,4 +1,9 @@
 // pages/category/category.js
+import {
+    getBaseUrl,
+    requestUtil
+} from '../../utils/requestUtil.js'
+
 Page({
 
     /**
@@ -33,33 +38,33 @@ Page({
     },
 
     loadData() {
-        let _this = this;
         let items = new Array();
-        wx.request({
-            url: 'http://localhost:8080/bigType/getAllBigType',
+        requestUtil({
+            url: '/bigType/getAllBigType',
             method: 'GET',
-            success(res) {
-                let allBigTypeList = res.data.allBigTypeList;
-                if (allBigTypeList.length > 0) {
-                    for (let i = 0; i < allBigTypeList.length; i++) {
-                        items[i] = {
-                            text: allBigTypeList[i].name,
-                            disabled: false,
-                            children: []
-                        }
-                        for (let j = 0; j < allBigTypeList[i].smallTypeList.length; j++) {
-                            items[i].children[j] = {
-                                text: allBigTypeList[i].smallTypeList[j].name,
-                                id: allBigTypeList[i].smallTypeList[j].id
-                            }
+        }).then(res => {
+            let allBigTypeList = res.data.allBigTypeList;
+            if (allBigTypeList.length > 0) {
+                for (let i = 0; i < allBigTypeList.length; i++) {
+                    items[i] = {
+                        text: allBigTypeList[i].name,
+                        disabled: false,
+                        children: []
+                    }
+                    for (let j = 0; j < allBigTypeList[i].smallTypeList.length; j++) {
+                        items[i].children[j] = {
+                            text: allBigTypeList[i].smallTypeList[j].name,
+                            id: allBigTypeList[i].smallTypeList[j].id
                         }
                     }
-                    _this.setData({
-                        items: items
-                    })
                 }
+                this.setData({
+                    items
+                })
             }
-        })
+        }).catch(err => {
+
+        });
     },
 
     /**
@@ -105,16 +110,21 @@ Page({
         });
     },
 
-    onClickItem({
-        detail = {}
-    }) {
-        const activeId = this.data.activeId === detail.id ? null : detail.id;
-        console.log(detail.id);
-        this.setData({
-            activeId
-        });
+    // onClickItem({
+    //     detail = {}
+    // }) {
+    //     const activeId = this.data.activeId === detail.id ? null : detail.id;
+    //     this.setData({
+    //         activeId
+    //     });
+    //     wx.navigateTo({
+    //         url: '/pages/goods-list/goods-list?smallTypeId=' + detail.id,
+    //     })
+    // }
+
+    onClickItem(e) {
         wx.navigateTo({
-            url: '/pages/goods-list/goods-list',
+            url: '/pages/goods-list/goods-list?smallTypeId=' + e.detail.id
         })
     }
 })

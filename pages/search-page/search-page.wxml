@@ -1,17 +1,17 @@
 <!--pages/search-page/search-page.wxml-->
 <view>
     <van-search model:value="{{ searchWord }}" background="#ff6200" placeholder="请输入关键词搜索商品" use-action-slot use-left-icon-slot="like">
-        <view slot="action" bind:tap="onClick" class="font_search">搜索</view>
+        <view slot="action" bind:tap="searchGoods" class="font_search">搜索</view>
     </van-search>
 </view>
-<view wx:if="{{searchWord==''}}">
+<view>
     <van-divider contentPosition="left" customStyle="color: #f35e09; border-color: #f35e09;">搜索历史</van-divider>
     <view class="van_tag">
         <van-tag round color="#bdbdbd" bindtap="searchByHistory" data-history="{{item.value}}" wx:for="{{searchWordHistoryList}}" wx:key="index">{{item.value}}</van-tag>
     </view>
     <van-divider contentPosition="left" customStyle="color: #f35e09; border-color: #f35e09;">推荐商品</van-divider>
     <!-- 推荐商品 -->
-    <view wx:for="{{recommendGoodsList}}" wx:key="item.id">
+    <view wx:for="{{recommendGoodsList}}" wx:key="index">
         <!-- 为了空出一行 -->
         <view class="view_blrank2"></view>
         <navigator url="{{'/pages/goods/goods?id='+item.id}}">
@@ -19,11 +19,4 @@
             </van-card>
         </navigator>
     </view>
-</view>
-<view wx:else>
-    <van-cell icon="search" wx:for="{{10}}" wx:key="*this">
-        <view slot="title">
-            <view class="van-cell-text">商品5商品5商品5商品5</view>
-        </view>
-    </van-cell>
 </view>

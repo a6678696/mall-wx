@@ -1,11 +1,15 @@
 // pages/search-page/search-page.js
+// 引入请求后端工具类
+import {
+    requestUtil
+} from '../../utils/requestUtil.js'
+
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        searchWord: '',
         recommendGoodsList:[],
         searchWordHistoryList: [
             {
@@ -60,14 +64,15 @@ Page({
     getRecommendGoodsList() {
         let _this = this;
         let recommendGoodsList = new Array();
-        wx.request({
-            url: 'http://localhost:8080/goods/getRecommendGoodsList',
+        requestUtil({
+            url: '/goods/getRecommendGoodsList',
             method: 'GET',
-            success(res) {
-                _this.setData({
-                    recommendGoodsList: res.data.goodsList
-                })
-            }
+        }).then(res => {
+            this.setData({
+                recommendGoodsList: res.data.goodsList
+            })
+        }).catch(err => {
+            
         })
     },
 
@@ -111,5 +116,11 @@ Page({
         this.setData({
             searchWord: searchWord
         });
+    },
+
+    searchGoods(){
+        wx.navigateTo({
+            url: '/pages/goods-list/goods-list?searchWord=' + this.data.searchWord
+        })
     }
 })

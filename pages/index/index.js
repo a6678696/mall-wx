@@ -1,7 +1,13 @@
+// 引入请求后端工具类
+import {
+    getBaseUrl,
+    requestUtil
+} from '../../utils/requestUtil.js'
 // index.js
 Page({
 
     data: {
+        baseUrl: '',
         swiperImageList: [],
         recommendGoodsList: []
     },
@@ -14,40 +20,40 @@ Page({
     // 获取首页轮播图图片
     getSwiperImageList() {
         let swiperImageList = new Array();
-        let _this = this;
-        wx.request({
-            url: 'http://localhost:8080/goods/getIndexSwiperGoodsList',
-            method: 'GET',
-            success(res) {
-                let goodsList = res.data.goodsList;
-                for (let i = 0; i < goodsList.length; i++) {
-                    swiperImageList[i] = {
-                        imageUrl: 'http://localhost:8080/image/goods/swiper/' + goodsList[i].goodsDetailsSwiperImageStr.split(',')[1],
-                        url: '/pages/goods/goods?id=' + goodsList[i].id
-                    }
+        requestUtil({
+            url: '/goods/getIndexSwiperGoodsList',
+            method: 'GET'
+        }).then(res => {
+            let goodsList = res.data.goodsList;
+            for (let i = 0; i < goodsList.length; i++) {
+                swiperImageList[i] = {
+                    imageUrl: this.data.baseUrl + '/image/goods/swiper/' + goodsList[i].goodsDetailsSwiperImageStr.split(',')[1],
+                    url: '/pages/goods/goods?id=' + goodsList[i].id
                 }
-                _this.setData({
-                    swiperImageList: swiperImageList
-                })
             }
+            this.setData({
+                swiperImageList
+            })
         })
     },
     //获取推荐商品列表
     getRecommendGoodsList() {
-        let _this = this;
-        let recommendGoodsList = new Array();
-        wx.request({
-            url: 'http://localhost:8080/goods/getRecommendGoodsList',
+        requestUtil({
+            url: '/goods/getRecommendGoodsList',
             method: 'GET',
-            success(res) {
-                _this.setData({
-                    recommendGoodsList: res.data.goodsList
-                })
-            }
+        }).then(res => {
+            this.setData({
+                recommendGoodsList: res.data.goodsList
+            })
+        }).catch(err => {
+
         })
     },
 
     onLoad() {
-
+        const baseUrl = getBaseUrl();
+        this.setData({
+            baseUrl
+        })
     }
 })

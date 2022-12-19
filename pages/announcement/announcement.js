@@ -1,5 +1,6 @@
 // pages/announcement/announcement.js
 import Notify from '@vant/weapp/notify/notify';
+import {requestUtil} from '../../utils/requestUtil.js'
 
 Page({
 
@@ -58,8 +59,11 @@ Page({
                 currentPage: this.data.currentPage - 1
             });
             this.loadData();
-        }else{
-            Notify({ type: 'primary', message: '当前已经是第一页了' });
+        } else {
+            Notify({
+                type: 'primary',
+                message: '当前已经是第一页了'
+            });
         }
     },
 
@@ -88,33 +92,33 @@ Page({
 
     loadData() {
         let announcementList;
-        let _this = this;
         let currentPage = this.data.currentPage;
         let pageSize = this.data.pageSize;
-        wx.request({
-            url: 'http://localhost:8080/announcement/list',
+        requestUtil({
+            url: '/announcement/list',
             method: 'GET',
             data: {
                 page: currentPage,
                 size: pageSize
             },
-            success(result) {
-                announcementList = result.data.announcementList;
-                if (announcementList.length > 0) {
-                    for (let i = 0; i < announcementList.length; i++) {
-                        announcementList[i] = {
-                            name: i,
-                            id: announcementList[i].id,
-                            title: announcementList[i].title,
-                            content: announcementList[i].content,
-                            addDate: announcementList[i].addDate
-                        };
-                    }
-                    _this.setData({
-                        announcementList: announcementList
-                    });
+        }).then(res => {
+            announcementList = res.data.announcementList;
+            if (announcementList.length > 0) {
+                for (let i = 0; i < announcementList.length; i++) {
+                    announcementList[i] = {
+                        name: i,
+                        id: announcementList[i].id,
+                        title: announcementList[i].title,
+                        content: announcementList[i].content,
+                        addDate: announcementList[i].addDate
+                    };
                 }
+                this.setData({
+                    announcementList: announcementList
+                });
             }
+        }).catch(err => {
+
         })
     }
 })
