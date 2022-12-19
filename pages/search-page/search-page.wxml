@@ -11,11 +11,11 @@
     </view>
     <van-divider contentPosition="left" customStyle="color: #f35e09; border-color: #f35e09;">推荐商品</van-divider>
     <!-- 推荐商品 -->
-    <view wx:for="{{6}}" wx:key="*this">
+    <view wx:for="{{recommendGoodsList}}" wx:key="item.id">
         <!-- 为了空出一行 -->
-        <view class="view_blank"></view>
-        <navigator url="/pages/goods/goods">
-            <van-card price="10.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg">
+        <view class="view_blrank2"></view>
+        <navigator url="{{'/pages/goods/goods?id='+item.id}}">
+            <van-card price="{{item.price}}" desc="{{item.description}}" title="{{item.name}}" thumb="{{'http://localhost:8080/image/goods/card/'+item.cardImageName}}">
             </van-card>
         </navigator>
     </view>

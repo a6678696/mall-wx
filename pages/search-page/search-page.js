@@ -6,6 +6,7 @@ Page({
      */
     data: {
         searchWord: '',
+        recommendGoodsList:[],
         searchWordHistoryList: [
             {
                 time:'2022-12-11 01:55:07',
@@ -52,7 +53,22 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
+        this.getRecommendGoodsList();
+    },
 
+    //获取推荐商品列表
+    getRecommendGoodsList() {
+        let _this = this;
+        let recommendGoodsList = new Array();
+        wx.request({
+            url: 'http://localhost:8080/goods/getRecommendGoodsList',
+            method: 'GET',
+            success(res) {
+                _this.setData({
+                    recommendGoodsList: res.data.goodsList
+                })
+            }
+        })
     },
 
     /**

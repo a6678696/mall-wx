@@ -1,16 +1,16 @@
 <!--pages/goods/goods.wxml-->
-<my-banner carouselImageList="{{carouselImageList}}"></my-banner>
+<my-banner swiperImageList="{{swiperImageList}}"></my-banner>
 <view>
-    <van-cell title="【旗舰新品】HUAWEI/华为Mate50 Pro 曲面屏超光变XMAGE影像鸿蒙3.0拍照摄影游戏新款智能手机华为官方旗舰店" />
-    <van-cell title="￥ 5999" value="销量: 5545" />
+    <van-cell title="{{goodsName}}" />
+    <van-cell title="{{'￥'+price}}" value="{{'销量: '+salesVolume}}" />
 </view>
 <view class="view_blank"></view>
 <van-tabs swipeable>
     <van-tab title="商品详情">
         <view class="goods_details">
             <van-row>
-                <van-col span="23" offset="1">
-                    <text>商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情</text>
+                <van-col span="24">
+                    <rich-text nodes="{{details}}"></rich-text>
                 </van-col>
             </van-row>
         </view>
@@ -34,8 +34,8 @@
 </van-tabs>
 <view class="view_blank2"></view>
 <van-goods-action>
-    <van-goods-action-icon icon="wap-home-o" text="首页" url="/pages/index/index" link-type="redirectTo"/>
-    <van-goods-action-icon icon="cart-o" text="购物车" info="5" url="/pages/cart/cart"/>
+    <van-goods-action-icon icon="wap-home-o" text="首页" url="/pages/index/index" link-type="redirectTo" />
+    <van-goods-action-icon icon="cart-o" text="购物车" info="5" url="/pages/cart/cart" />
     <van-goods-action-button text="加入购物车" type="warning" />
     <van-goods-action-button text="立即购买" />
 </van-goods-action>

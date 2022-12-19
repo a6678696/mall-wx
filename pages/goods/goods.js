@@ -5,31 +5,40 @@ Page({
      * 页面的初始数据
      */
     data: {
+        goodsName: '',
+        price: 0,
+        salesVolume: 0,
+        details:'',
         stars: 4.5,
-        carouselImageList: [
-            {
-                image:"/images/banner/1.jpeg"
-            },
-            {
-                image:"/images/banner/2.jpeg"
-            },
-            {
-                image:"/images/banner/3.jpeg"
-            },
-            {
-                image:"/images/banner/4.jpeg"
-            },
-            {
-                image:"/images/banner/5.jpeg"
-            }
-        ]
+        swiperImageList: []
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-
+        let _this = this;
+        let swiperImageList = [];
+        wx.request({
+            url: 'http://localhost:8080/goods/findById?id=' + options.id,
+            method: 'GET',
+            success(res) {
+                for (let i = 0; i < res.data.goods.swiperImageNameList.length; i++) {
+                    if (res.data.goods.swiperImageNameList[i] !== '') {
+                        swiperImageList[i] = {
+                            imageUrl: res.data.goods.swiperImageNameList[i]
+                        }
+                    }
+                }
+                _this.setData({
+                    goodsName: res.data.goods.name,
+                    price: res.data.goods.price,
+                    salesVolume: res.data.goods.salesVolume,
+                    swiperImageList: swiperImageList,
+                    details: res.data.goods.details.replace(/\<img/gi, '<img style="max-width:100%;height:auto"'),
+                })
+            }
+        })
     },
 
     /**
@@ -43,7 +52,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-
+        console.log(this.data.id);
     },
 
     /**
