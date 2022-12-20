@@ -19,7 +19,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-
+        this.loadData();
     },
 
     /**
@@ -34,7 +34,6 @@ Page({
      */
     onShow() {
         this.getTabBar().init(1);
-        this.loadData();
     },
 
     loadData() {
@@ -109,18 +108,6 @@ Page({
             mainActiveIndex: detail.index || 0,
         });
     },
-
-    // onClickItem({
-    //     detail = {}
-    // }) {
-    //     const activeId = this.data.activeId === detail.id ? null : detail.id;
-    //     this.setData({
-    //         activeId
-    //     });
-    //     wx.navigateTo({
-    //         url: '/pages/goods-list/goods-list?smallTypeId=' + detail.id,
-    //     })
-    // }
 
     onClickItem(e) {
         wx.navigateTo({

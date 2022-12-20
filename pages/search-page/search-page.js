@@ -1,6 +1,7 @@
 // pages/search-page/search-page.js
 // 引入请求后端工具类
 import {
+    getBaseUrl,
     requestUtil
 } from '../../utils/requestUtil.js'
 
@@ -10,31 +11,31 @@ Page({
      * 页面的初始数据
      */
     data: {
-        recommendGoodsList:[],
-        searchWordHistoryList: [
-            {
-                time:'2022-12-11 01:55:07',
-                value:'笔记本电脑32G'
+        baseUrl: '',
+        recommendGoodsList: [],
+        searchWordHistoryList: [{
+                time: '2022-12-11 01:55:07',
+                value: '笔记本电脑32G'
             },
             {
-                time:'2022-12-11 01:55:07',
-                value:'樱桃键盘'
+                time: '2022-12-11 01:55:07',
+                value: '樱桃键盘'
             },
             {
-                time:'2022-12-11 01:55:07',
-                value:'一加8T手机壳'
+                time: '2022-12-11 01:55:07',
+                value: '一加8T手机壳'
             },
             {
-                time:'2022-12-11 01:55:03',
-                value:'5G'
+                time: '2022-12-11 01:55:03',
+                value: '5G'
             },
             {
-                time:'2022-12-11 01:54:58',
-                value:'一加'
+                time: '2022-12-11 01:54:58',
+                value: '一加'
             },
             {
-                time:'2022-12-11 01:54:22',
-                value:'华为'
+                time: '2022-12-11 01:54:22',
+                value: '华为'
             }
         ]
     },
@@ -43,7 +44,11 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-
+        const baseUrl = getBaseUrl();
+        this.setData({
+            baseUrl
+        });
+        this.getRecommendGoodsList();
     },
 
     /**
@@ -57,7 +62,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        this.getRecommendGoodsList();
+
     },
 
     //获取推荐商品列表
@@ -72,7 +77,7 @@ Page({
                 recommendGoodsList: res.data.goodsList
             })
         }).catch(err => {
-            
+
         })
     },
 
@@ -118,7 +123,7 @@ Page({
         });
     },
 
-    searchGoods(){
+    searchGoods() {
         wx.navigateTo({
             url: '/pages/goods-list/goods-list?searchWord=' + this.data.searchWord
         })

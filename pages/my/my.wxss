@@ -1,4 +1,13 @@
-.view_image {
+.view_image_nickName {
+  background-color: var(--themeColor);
+}
+.view_image_nickName .view_image {
   text-align: center;
-  margin-top: 12rpx;
+}
+.view_image_nickName .view_nickName {
+  color: white;
+  text-align: center;
+}
+.view_blrank {
+  padding-bottom: 2%;
 }

@@ -1,10 +1,17 @@
 <!--pages/my/my.wxml-->
-<view class="view_image">
-    <van-image round width="5rem" height="5rem" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+<view class="view_image_nickName">
+    <view class="view_image">
+        <van-image round width="4rem" height="4rem" src="{{customerAvatarImageUrl}}" />
+    </view>
+    <view class="view_nickName">
+        {{nickName}}
+    </view>
+    <view class="view_blrank"></view>
 </view>
-<view>
+<view class="view_menu">
     <van-cell icon="bag" is-link title="订单" link-type="navigateTo" url="/pages/order/order" />
     <van-cell icon="like" is-link title="收藏" link-type="navigateTo" url="/pages/like/like" />
     <van-cell icon="underway" is-link title="足迹" link-type="navigateTo" url="/pages/footprint/footprint" />
-    <van-cell icon="map-marked" is-link title="收货地址" link-type="navigateTo" url="/pages/address/address" />
+    <van-cell icon="location" is-link title="收货地址" link-type="navigateTo" url="/pages/address/address" />
+    <van-cell icon="info" is-link title="个人信息" link-type="navigateTo" url="/pages/address/address" />
 </view>

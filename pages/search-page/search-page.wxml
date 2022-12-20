@@ -15,7 +15,7 @@
         <!-- 为了空出一行 -->
         <view class="view_blrank2"></view>
         <navigator url="{{'/pages/goods/goods?id='+item.id}}">
-            <van-card price="{{item.price}}" desc="{{item.description}}" title="{{item.name}}" thumb="{{'http://localhost:8080/image/goods/card/'+item.cardImageName}}">
+            <van-card price="{{item.price}}" desc="{{item.description}}" title="{{item.name}}" thumb="{{baseUrl+'/image/goods/card/'+item.cardImageName}}">
             </van-card>
         </navigator>
     </view>
