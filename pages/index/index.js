@@ -24,6 +24,10 @@ Page({
         }).then(res => {
             let goodsList = res.data.goodsList;
             for (let i = 0; i < goodsList.length; i++) {
+                //只展示前6个首页轮播图商品
+                if(i===6){
+                    break;
+                }
                 swiperImageList[i] = {
                     imageUrl: this.data.baseUrl + '/image/goods/swiper/' + goodsList[i].goodsDetailsSwiperImageStr.split(',')[1],
                     url: '/pages/goods/goods?id=' + goodsList[i].id

@@ -35,7 +35,8 @@
 <view class="view_blank2"></view>
 <van-goods-action>
     <van-goods-action-icon icon="wap-home-o" text="首页" url="/pages/index/index" link-type="redirectTo" />
-    <van-goods-action-icon icon="cart-o" text="购物车" info="5" url="/pages/cart/cart" />
-    <van-goods-action-button text="加入购物车" type="warning" />
+    <van-goods-action-icon icon="cart-o" text="购物车" info="{{goodsNum===0?'':goodsNum}}" url="/pages/cart/cart" />
+    <van-goods-action-button text="加入购物车" type="warning" bind:click="addGoodsToCart"/>
     <van-goods-action-button text="立即购买" />
 </van-goods-action>
+<van-notify id="van-notify" />

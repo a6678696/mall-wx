@@ -1,5 +1,5 @@
 <!--pages/shoppingCart/shoppingCart.wxml-->
-<view wx:if="{{hasList}}">
+<view wx:if="{{carts.length>0}}">
     <view wx:for="{{carts}}" wx:key="id">
         <van-card price="{{item.price}}" title="{{item.title}}" thumb="{{item.image}}" desc="{{item.desc}}">
             <view slot="footer">
@@ -9,13 +9,13 @@
         </van-card>
         <view class="view_brank1"></view>
     </view>
+    <van-submit-bar price="{{ totalPrice*100 }}" button-text="结算" bind:submit="settleAccounts" tip="{{ true }}" label=" ">
+    <van-checkbox checked-color="#ff6200" value="{{ selectAllStatus }}" bind:change="selectAll">全选</van-checkbox>
+</van-submit-bar>
 </view>
 <view wx:else>
     <van-empty class="custom-image" image="/images/no.png" description="你的购物车里没有商品" />
 </view>
-<van-submit-bar price="{{ totalPrice*100 }}" button-text="结算" bind:submit="settleAccounts" tip="{{ true }}" label=" ">
-    <van-checkbox checked-color="#ff6200" value="{{ selectAllStatus }}" bind:change="selectAll">全选</van-checkbox>
-</van-submit-bar>
 <van-notify id="van-notify" />
 <van-dialog id="van-dialog" />
 <van-toast id="van-toast" />

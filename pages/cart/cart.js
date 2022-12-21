@@ -10,7 +10,6 @@ Page({
      */
     data: {
         carts: [], // 购物车列表
-        hasList: false, // 列表是否有数据
         totalPrice: 0, // 总价，初始为0
         selectAllStatus: false // 全选状态，默认全选
     },
@@ -19,7 +18,20 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-
+        //如果购物车不存在于Storage
+        if (!wx.getStorageSync('carts')) {
+            wx.setStorageSync('carts', this.data.carts);
+        } else {
+            this.setData({
+                carts: wx.getStorageSync('carts').reverse()
+            });
+            Toast({
+                message: '数量设置为 0 即可删除商品',
+                duration: 1000,
+                position: 'top'
+            });
+            this.getTotalPrice();
+        }
     },
 
     /**
@@ -33,61 +45,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        Toast({
-            message: '数量设置为 0 即可删除商品',
-            duration: 2000,
-            position: 'top'
-        });
-        this.setData({
-            hasList: true,
-            carts: [{
-                    id: 1,
-                    title: '华为nova9 SE',
-                    desc: '商品描述商品描述商品描述',
-                    image: '/images/cart/1.jpg',
-                    num: 1,
-                    price: 2199,
-                    selected: false
-                },
-                {
-                    id: 2,
-                    title: '华为P50 Pro',
-                    desc: '商品描述商品描述商品描述',
-                    image: '/images/cart/2.jpg',
-                    num: 1,
-                    price: 5488,
-                    selected: false
-                },
-                {
-                    id: 3,
-                    title: '游侠G15游戏本',
-                    desc: '商品描述商品描述商品描述',
-                    image: '/images/cart/3.jpg',
-                    num: 1,
-                    price: 6429,
-                    selected: false
-                },
-                {
-                    id: 4,
-                    title: 'iPhone 12',
-                    desc: '商品描述商品描述商品描述',
-                    image: '/images/cart/4.jpg',
-                    num: 1,
-                    price: 4699,
-                    selected: false
-                },
-                {
-                    id: 5,
-                    title: '一加10 Pro',
-                    desc: '商品描述商品描述商品描述',
-                    image: '/images/cart/5.jpg',
-                    num: 1,
-                    price: 3999,
-                    selected: false
-                }
-            ]
-        });
-        this.getTotalPrice();
+
     },
 
     /**
@@ -160,11 +118,7 @@ Page({
                 this.setData({
                     carts: carts
                 });
-                if (!carts.length) {
-                    this.setData({
-                        hasList: false
-                    });
-                } else {
+                if (carts.length) {
                     this.getTotalPrice();
                 }
             })
@@ -237,10 +191,10 @@ Page({
                     });
                     if (!carts.length) {
                         this.setData({
-                            hasList: false,
                             totalPrice: 0,
                             selectAllStatus: false
                         });
+                        wx.setStorageSync('carts', carts);
                     } else {
                         this.getTotalPrice();
                     }
@@ -284,6 +238,7 @@ Page({
                 selectAllStatus: false
             });
         }
+        wx.setStorageSync('carts', carts);
     },
 
     settleAccounts() {

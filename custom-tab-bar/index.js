@@ -11,7 +11,7 @@ Component({
      * 组件的初始数据
      */
     data: {
-
+        goodsNum: 0,
     },
 
     /**
@@ -55,6 +55,12 @@ Component({
             this.setData({
                 active: active
             })
+            //购物车商品数量
+            if (wx.getStorageSync('carts')) {
+                this.setData({
+                    goodsNum: wx.getStorageSync('carts').length
+                })
+            }
         }
     }
 })

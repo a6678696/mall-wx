@@ -7,7 +7,7 @@
     <van-tabbar-item icon="apps-o" data-page="category" data-target="/pages/category/category">
       分类
     </van-tabbar-item>
-    <van-tabbar-item icon="shopping-cart-o" data-page="cart">
+    <van-tabbar-item icon="shopping-cart-o" data-page="cart" info="{{goodsNum===0?'':goodsNum}}" >
       购物车
     </van-tabbar-item>
     <van-tabbar-item icon="manager-o" data-page="my" data-target="/pages/my/my">
