@@ -9,9 +9,16 @@
     <view class="view_blrank"></view>
 </view>
 <view class="view_menu">
-    <van-cell icon="bag" is-link title="订单" link-type="navigateTo" url="/pages/order/order" />
+    <van-cell icon="bag" is-link title="全部订单" link-type="navigateTo" url="/pages/order/order" />
+    <van-grid>
+        <van-grid-item icon="completed" text="已完成" />
+        <van-grid-item icon="balance-list-o" text="已付款" />
+        <van-grid-item icon="todo-list-o" text="待付款" />
+        <van-grid-item icon="failure" text="已取消" />
+    </van-grid>
     <van-cell icon="like" is-link title="收藏" link-type="navigateTo" url="/pages/like/like" />
     <van-cell icon="underway" is-link title="足迹" link-type="navigateTo" url="/pages/footprint/footprint" />
     <van-cell icon="location" is-link title="收货地址" link-type="navigateTo" url="/pages/address/address" />
-    <van-cell icon="info" is-link title="个人信息" link-type="navigateTo" url="/pages/address/address" />
+    <van-cell icon="info" is-link title="个人信息" link-type="navigateTo" url="/pages/my-information-modify/my-information-modify" />
+    <van-cell icon="comment" is-link title="我的评论" link-type="navigateTo" url="/pages/address/address" />
 </view>

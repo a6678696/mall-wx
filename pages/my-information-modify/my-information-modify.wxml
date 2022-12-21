@@ -1,0 +1,21 @@
+<!--pages/my-information-modify/my-information-modify.wxml-->
+<van-notice-bar left-icon="volume-o" text="不选择图片就不会修改头像" />
+<view class="image">
+    <van-image round width="5rem" height="5rem" src="{{avatarImageUrl}}" />
+</view>
+<van-cell-group>
+    <van-field model:value="{{ nickName }}" placeholder="请输入昵称" label="昵称" title-width="4em" />
+    <van-cell>
+        <view slot="title">
+            <view class="van-cell-text"><text>头像</text>
+                <van-uploader file-list="{{ fileList }}" max-count="1" deletable="{{ true }}" bind:after-read="afterRead" class="van_uploader" bind:delete="deleteImage"/>
+            </view>
+        </view>
+    </van-cell>
+</van-cell-group>
+<view class="save_btn">
+    <van-button round size="small" color="linear-gradient(to right, #4bb0ff, #6149f6)" bind:click="update">保存</van-button>
+</view>
+<van-popup show="{{ show }}" bind:close="onClose" position="bottom">
+    <van-area area-list="{{ areaList }}" columns-num="{{ 3 }}" title="选择省市区" value="{{value}}" bind:cancel="onCancel" bind:confirm="onConfirm" bind:change="onChange" />
+</van-popup>

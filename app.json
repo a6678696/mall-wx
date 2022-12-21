@@ -15,7 +15,8 @@
         "pages/address-modify/address-modify",
         "pages/search-page/search-page",
         "pages/confirm-order/confirm-order",
-        "pages/announcement/announcement"
+        "pages/announcement/announcement",
+        "pages/my-information-modify/my-information-modify"
     ],
     "tabBar": {
         "custom": true,

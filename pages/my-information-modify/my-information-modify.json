@@ -1,0 +1,13 @@
+{
+    "usingComponents": {
+        "area-select": "/components/area-select/area-select",
+        "van-field": "@vant/weapp/field/index",
+        "van-image": "@vant/weapp/image/index",
+        "van-button": "@vant/weapp/button/index",
+        "van-notice-bar": "@vant/weapp/notice-bar/index",
+        "van-uploader": "@vant/weapp/uploader/index",
+        "van-cell": "@vant/weapp/cell/index",
+        "van-cell-group": "@vant/weapp/cell-group/index"
+    },
+    "navigationBarTitleText": "修改个人信息"
+}

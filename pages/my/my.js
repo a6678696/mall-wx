@@ -23,10 +23,6 @@ Page({
         this.setData({
             baseUrl
         });
-        this.setData({
-            customerAvatarImageUrl: this.data.baseUrl+'/image/customer/avatar/'+wx.getStorageSync('currentCustomer').avatarImageName,
-            nickName: wx.getStorageSync('currentCustomer').nickName
-        });
     },
 
     /**
@@ -41,6 +37,10 @@ Page({
      */
     onShow() {
         this.getTabBar().init(3);
+        this.setData({
+            customerAvatarImageUrl: this.data.baseUrl+'/image/customer/avatar/'+wx.getStorageSync('currentCustomer').avatarImageName,
+            nickName: wx.getStorageSync('currentCustomer').nickName
+        });
     },
 
     /**
