@@ -10,6 +10,9 @@ Component({
     properties: {
         area: {
             type: String
+        },
+        value: {
+            type: String
         }
     },
 
@@ -20,7 +23,7 @@ Component({
         area: '',
         address: '',
         areaList,
-        value: 110102,
+        value: '',
         show: false
     },
 
@@ -58,6 +61,7 @@ Component({
                 value: code,
                 area: area
             });
+            this.triggerEvent('sendMessage', this.data.area + "," + this.data.value)
         },
 
         /**

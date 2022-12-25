@@ -8,7 +8,7 @@
             "list": [
                 {
                     "name": "11",
-                    "pathName": "pages/my-information-modify/my-information-modify",
+                    "pathName": "pages/address/address",
                     "query": "",
                     "launchMode": "default",
                     "scene": null

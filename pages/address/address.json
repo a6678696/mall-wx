@@ -12,7 +12,8 @@
         "van-col": "@vant/weapp/col/index",
         "van-checkbox": "@vant/weapp/checkbox/index",
         "van-checkbox-group": "@vant/weapp/checkbox-group/index",
-        "van-notify": "@vant/weapp/notify/index"
+        "van-notify": "@vant/weapp/notify/index",
+        "van-empty": "@vant/weapp/empty/index"
     },
     "navigationBarTitleText": "收货地址"
 }

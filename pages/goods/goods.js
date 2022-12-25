@@ -60,7 +60,7 @@ Page({
                 salesVolume: res.data.goods.salesVolume,
                 cardImageName: res.data.goods.cardImageName,
                 swiperImageList: swiperImageList,
-                details: res.data.goods.details.replace(/\<img/gi, '<img style="max-width:100%;height:auto"'),
+                details: res.data.goods.details,
             })
         }).catch(err => {
 
@@ -104,7 +104,7 @@ Page({
         Notify({
             type: 'primary',
             duration: 1500,
-            message: '商品添加到购物车'
+            message: '商品已添加到购物车'
         });
         wx.setStorageSync('carts', carts);
         this.setData({
@@ -123,7 +123,6 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        console.log(this.data.id);
         //购物车商品数量
         if (wx.getStorageSync('carts')) {
             this.setData({
