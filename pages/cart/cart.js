@@ -11,7 +11,8 @@ Page({
     data: {
         carts: [], // 购物车列表
         totalPrice: 0, // 总价，初始为0
-        selectAllStatus: false // 全选状态，默认全选
+        selectAllStatus: false, // 全选状态，默认全选
+        selectCount: 0
     },
 
     /**
@@ -226,7 +227,8 @@ Page({
         }
         this.setData({ // 最后赋值到data中渲染到页面
             carts: carts,
-            totalPrice: total.toFixed(2)
+            totalPrice: total.toFixed(2),
+            selectCount
         });
         //如果选择的商品数和购物车商品数量一样，就勾上全选
         if (selectCount === carts.length) {
@@ -242,8 +244,16 @@ Page({
     },
 
     settleAccounts() {
-        wx.navigateTo({
-            url: '/pages/confirm-order/confirm-order',
-        })
+        if (this.data.selectCount !== 0) {
+            wx.navigateTo({
+                url: '/pages/confirm-order/confirm-order',
+            })
+        } else {
+            Notify({
+                type: 'danger',
+                duration: 2000,
+                message: '你没有选择商品，无法结算'
+            });
+        }
     }
 })

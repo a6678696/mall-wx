@@ -114,7 +114,7 @@ Page({
                     };
                 }
                 this.setData({
-                    announcementList: announcementList
+                    announcementList
                 });
             }
         }).catch(err => {

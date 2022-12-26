@@ -15,3 +15,4 @@
 <van-popup show="{{ show }}" bind:close="onClose" position="bottom">
     <van-area area-list="{{ areaList }}" columns-num="{{ 3 }}" title="选择省市区" value="{{value}}" bind:cancel="onCancel" bind:confirm="onConfirm" bind:change="onChange"/>
 </van-popup>
+<van-notify id="van-notify" />

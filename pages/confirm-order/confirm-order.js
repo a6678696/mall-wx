@@ -1,4 +1,11 @@
 // pages/confirm-order/confirm-order.js
+import Toast from '@vant/weapp/toast/toast';
+import Dialog from '@vant/weapp/dialog/dialog';
+
+import {
+    getBaseUrl,
+    requestUtil
+} from '../../utils/requestUtil.js'
 Page({
 
     /**
@@ -8,7 +15,7 @@ Page({
         showAddressSelect: false,
         totalPrice: 0,
         //当前地址
-        addressNow: [1, '王明 18020666575', '北京市市辖区门头沟区北京市市辖区门头沟区龙泉地区21号', '家'],
+        addressNow: [],
         //可选择的地址
         actions: [{
                 id: 2,
@@ -22,64 +29,76 @@ Page({
             },
         ],
         //全部地址
-        addressList: [{
-                id: 1,
-                name: '王明 18020666575',
-                subname: '北京市市辖区门头沟区北京市市辖区门头沟区龙泉地区21号',
-                defaultSelected: true,
-                description: '家'
-            },
-            {
-                id: 2,
-                name: '石霞 13112131229',
-                subname: '吉林省四平市梨树县霍家店街道12号',
-                defaultSelected: false,
-                description: '学校'
-            },
-            {
-                id: 3,
-                name: '阎天昊 19034879089',
-                subname: '云南省保山市腾冲市团田乡33号',
-                defaultSelected: false,
-                description: '公司'
-            },
-        ],
-        goodsList: [{
-                num: 2,
-                price: 2.00,
-                desc: '描述信息',
-                title: '商品标题',
-                imageUrl: 'https://img01.yzcdn.cn/vant/ipad.jpeg'
-            },
-            {
-                num: 2,
-                price: 2.00,
-                desc: '描述信息',
-                title: '商品标题',
-                imageUrl: 'https://img01.yzcdn.cn/vant/ipad.jpeg'
-            },
-            {
-                num: 2,
-                price: 2.10,
-                desc: '描述信息',
-                title: '商品标题',
-                imageUrl: 'https://img01.yzcdn.cn/vant/ipad.jpeg'
-            },
-            {
-                num: 2,
-                price: 2.00,
-                desc: '描述信息',
-                title: '商品标题',
-                imageUrl: 'https://img01.yzcdn.cn/vant/ipad.jpeg'
-            }
-        ]
+        addressList: [],
+        goodsList: []
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+        this.loadData();
+    },
 
+    //加载数据
+    loadData() {
+        requestUtil({
+            url: '/address/listNoPage',
+            method: 'GET',
+            data: {
+                customerId: wx.getStorageSync('currentCustomer').id
+            }
+        }).then(res => {
+            let addressList2 = res.data.addressList;
+            let addressNow = [];
+            let actions = [];
+            let addressList = [];
+            let index = 0;
+            for (let i = 0; i < addressList2.length; i++) {
+                //如果是默认地址
+                if (addressList2[i].isSelected) {
+                    addressNow = [addressList2[i].id, addressList2[i].name + ' ' + addressList2[i].phoneNum, addressList2[i].area + addressList2[i].details, addressList2[i].description]
+                } else {
+                    actions[index] = {
+                        id: addressList2[i].id,
+                        name: addressList2[i].name + ' ' + addressList2[i].phoneNum + '（' + addressList2[i].description + '）',
+                        subname: addressList2[i].area + addressList2[i].details
+                    };
+                    index++;
+                }
+                addressList[i] = {
+                    id: addressList2[i].id,
+                    name: addressList2[i].name + ' ' + addressList2[i].phoneNum,
+                    subname: addressList2[i].area + addressList2[i].details,
+                    defaultSelected: addressList2[i].isSelected,
+                    description: addressList2[i].description
+                }
+            }
+            this.setData({
+                addressNow,
+                actions,
+                addressList
+            })
+        }).catch(err => {
+
+        })
+        let carts = wx.getStorageSync('carts');
+        let index = 0;
+        let goodsList = [];
+        for (let i = 0; i < carts.length; i++) {
+            if (carts[i].selected) {
+                goodsList[index] = {
+                    num: carts[i].num,
+                    price: carts[i].price,
+                    title: carts[i].title,
+                    imageUrl: carts[i].image
+                }
+                index++;
+            }
+        }
+        this.setData({
+            goodsList
+        })
     },
 
     /**
@@ -148,10 +167,7 @@ Page({
         for (let i = 0; i < addressList.length; i++) {
             if (selectedId === addressList[i].id) {
                 //设置当前地址
-                addressNow[0] = addressList[i].id;
-                addressNow[1] = addressList[i].name;
-                addressNow[2] = addressList[i].subname;
-                addressNow[3] = addressList[i].description;
+                addressNow = [addressList[i].id, addressList[i].name, addressList[i].subname, addressList[i].description]
                 //将已选择的地址defaultSelected设置为true
                 addressList[i].defaultSelected = true;
             } else {
@@ -179,6 +195,25 @@ Page({
         }
         this.setData({
             totalPrice: totalPrice
+        });
+    },
+
+    onSubmit() {
+        Toast.loading({
+            message: '提交成功，正在拉起支付...',
+            forbidClick: true,
+            onClose: () => {
+                Dialog.confirm({
+                    title: '支付提示',
+                    message: '你确定要支付吗？',
+                })
+                .then(() => {
+                    // on confirm
+                })
+                .catch(() => {
+                    // on cancel
+                });
+            }
         });
     }
 })

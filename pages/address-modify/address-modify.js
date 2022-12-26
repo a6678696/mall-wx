@@ -1,4 +1,5 @@
 // pages/address-modify/address-modify.js
+import Notify from '@vant/weapp/notify/notify';
 // 引入请求后端工具类
 import {
     getBaseUrl,

@@ -3,7 +3,8 @@
         "area-select":"/components/area-select/area-select",
         "van-field": "@vant/weapp/field/index",
         "van-image": "@vant/weapp/image/index",
-        "van-button": "@vant/weapp/button/index"
+        "van-button": "@vant/weapp/button/index",
+        "van-notify": "@vant/weapp/notify/index"
     },
     "navigationBarTitleText": "修改收货地址"
 }
