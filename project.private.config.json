@@ -8,7 +8,7 @@
             "list": [
                 {
                     "name": "11",
-                    "pathName": "pages/confirm-order/confirm-order",
+                    "pathName": "pages/search-page/search-page",
                     "query": "",
                     "launchMode": "default",
                     "scene": null

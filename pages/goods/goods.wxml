@@ -18,10 +18,10 @@
     <van-tab title="用户评论">
         <view class="view_comment" wx:for="{{6}}" wx:key="id">
             <van-row>
-                <van-col span="5" offset="1">
-                    <van-image width="5rem" height="5rem" src="https://img.yzcdn.cn/vant/cat.jpeg" round />
+                <van-col span="2" offset="1">
+                    <van-image width="3rem" height="3rem" src="https://img.yzcdn.cn/vant/cat.jpeg" round />
                 </van-col>
-                <van-col span="16" offset="2">
+                <van-col span="19" offset="2">
                     <van-rate allow-half readonly value="{{ stars }}" color="#ff6200" size="38rpx" /><text class="text_stars"> {{stars}}</text>
                     <text>\n</text>
                     <text>我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论我是评论</text>
@@ -37,6 +37,6 @@
     <van-goods-action-icon icon="wap-home-o" text="首页" url="/pages/index/index" link-type="redirectTo" />
     <van-goods-action-icon icon="cart-o" text="购物车" info="{{goodsNum===0?'':goodsNum}}" url="/pages/cart/cart" />
     <van-goods-action-button text="加入购物车" type="warning" bind:click="addGoodsToCart"/>
-    <van-goods-action-button text="立即购买" />
+    <van-goods-action-button text="立即购买" bind:click="toCart"/>
 </van-goods-action>
 <van-notify id="van-notify" />

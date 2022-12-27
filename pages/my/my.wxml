@@ -9,12 +9,20 @@
     <view class="view_blrank"></view>
 </view>
 <view class="view_menu">
-    <van-cell icon="bag" is-link title="全部订单" link-type="navigateTo" url="/pages/order/order" />
+    <van-cell icon="bag" is-link title="全部订单" link-type="navigateTo" url="/pages/order/order?activeNum=a" />
     <van-grid>
-        <van-grid-item icon="completed" text="已完成" />
-        <van-grid-item icon="balance-list-o" text="已付款" />
-        <van-grid-item icon="todo-list-o" text="待付款" />
-        <van-grid-item icon="failure" text="已取消" />
+        <navigator url="/pages/order/order?activeNum=a">
+            <van-grid-item icon="completed" text="已完成" />
+        </navigator>
+        <navigator url="/pages/order/order?activeNum=b">
+            <van-grid-item icon="balance-list-o" text="已付款" />
+        </navigator>
+        <navigator url="/pages/order/order?activeNum=c">
+            <van-grid-item icon="todo-list-o" text="待付款" />
+        </navigator>
+        <navigator url="/pages/order/order?activeNum=d">
+            <van-grid-item icon="failure" text="已取消" />
+        </navigator>
     </van-grid>
     <van-cell icon="location" is-link title="收货地址" link-type="navigateTo" url="/pages/address/address" />
     <van-cell icon="info" is-link title="个人信息" link-type="navigateTo" url="/pages/my-information-modify/my-information-modify" />

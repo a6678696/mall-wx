@@ -1,4 +1,5 @@
 // pages/search-page/search-page.js
+import Notify from '@vant/weapp/notify/notify';
 // 引入请求后端工具类
 import {
     getBaseUrl,
@@ -13,31 +14,8 @@ Page({
     data: {
         baseUrl: '',
         recommendGoodsList: [],
-        searchWordHistoryList: [{
-                time: '2022-12-11 01:55:07',
-                value: '笔记本电脑32G'
-            },
-            {
-                time: '2022-12-11 01:55:07',
-                value: '樱桃键盘'
-            },
-            {
-                time: '2022-12-11 01:55:07',
-                value: '一加8T手机壳'
-            },
-            {
-                time: '2022-12-11 01:55:03',
-                value: '5G'
-            },
-            {
-                time: '2022-12-11 01:54:58',
-                value: '一加'
-            },
-            {
-                time: '2022-12-11 01:54:22',
-                value: '华为'
-            }
-        ]
+        searchWordHistoryList: [],
+        searchWord: ''
     },
 
     /**
@@ -62,7 +40,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-
+        this.getSearchWordHistoryList();
     },
 
     //获取推荐商品列表
@@ -78,6 +56,13 @@ Page({
             })
         }).catch(err => {
 
+        })
+    },
+
+    getSearchWordHistoryList() {
+        let searchWordHistoryList = wx.getStorageSync('searchWordHistoryList');
+        this.setData({
+            searchWordHistoryList: searchWordHistoryList.reverse()
         })
     },
 
@@ -119,13 +104,44 @@ Page({
     searchByHistory(e) {
         const searchWord = e.currentTarget.dataset.history;
         this.setData({
-            searchWord: searchWord
+            searchWord
+        });
+        wx.navigateTo({
+            url: '/pages/goods-list/goods-list?searchWord=' + this.data.searchWord
         });
     },
 
     searchGoods() {
+        if (this.data.searchWord === '') {
+            Notify('请输入关键词...');
+            return false;
+        }
+        let searchWordHistoryList = wx.getStorageSync('searchWordHistoryList');
+        let searchWordEntity = {
+            value: this.data.searchWord,
+            time: new Date()
+        }
+        //用于判断搜索历史是否已经存在
+        let flag = false;
+        if (!searchWordHistoryList) {
+            searchWordHistoryList = [];
+        } else {
+            for (let i = 0; i < searchWordHistoryList.length; i++) {
+                if (searchWordHistoryList[i].value === searchWordEntity.value) {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        if (!flag) {
+            searchWordHistoryList.push(searchWordEntity);
+        }
+        if (searchWordHistoryList.length > 10) {
+            searchWordHistoryList.shift();
+        }
+        wx.setStorageSync('searchWordHistoryList', searchWordHistoryList);
         wx.navigateTo({
             url: '/pages/goods-list/goods-list?searchWord=' + this.data.searchWord
-        })
+        });
     }
 })

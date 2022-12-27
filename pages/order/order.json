@@ -7,7 +7,9 @@
         "van-tabs": "@vant/weapp/tabs/index",
         "van-cell": "@vant/weapp/cell/index",
         "van-cell-group": "@vant/weapp/cell-group/index",
-        "van-tag": "@vant/weapp/tag/index"
+        "van-tag": "@vant/weapp/tag/index",
+        "van-button": "@vant/weapp/button/index",
+        "van-divider": "@vant/weapp/divider/index"
     },
     "navigationBarTitleText": "订单"
 }

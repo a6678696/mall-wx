@@ -5,9 +5,11 @@
     </van-search>
 </view>
 <view>
-    <van-divider contentPosition="left" customStyle="color: #f35e09; border-color: #f35e09;">搜索历史</van-divider>
-    <view class="van_tag">
-        <van-tag round color="#bdbdbd" bindtap="searchByHistory" data-history="{{item.value}}" wx:for="{{searchWordHistoryList}}" wx:key="index">{{item.value}}</van-tag>
+    <view wx:if="{{searchWordHistoryList.length>0}}">
+        <van-divider contentPosition="left" customStyle="color: #f35e09; border-color: #f35e09;">搜索历史</van-divider>
+        <view class="van_tag">
+            <van-tag round color="#bdbdbd" bindtap="searchByHistory" data-history="{{item.value}}" wx:for="{{searchWordHistoryList}}" wx:key="index">{{item.value}}</van-tag>
+        </view>
     </view>
     <van-divider contentPosition="left" customStyle="color: #f35e09; border-color: #f35e09;">推荐商品</van-divider>
     <!-- 推荐商品 -->
@@ -20,3 +22,4 @@
         </navigator>
     </view>
 </view>
+<van-notify id="van-notify" />

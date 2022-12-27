@@ -10,13 +10,13 @@
     <navigator url="/pages/announcement/announcement">
         <van-grid-item icon="bullhorn-o" text="公告" />
     </navigator>
-    <navigator url="/pages/goods-list/goods-list">
+    <navigator url="/pages/goods-list/goods-list?isGoodsListNew=1">
         <van-grid-item icon="new-o" text="新品" />
     </navigator>
-    <navigator url="/pages/goods-list/goods-list">
+    <navigator url="/pages/goods-list/goods-list?isGoodsListHot=1">
         <van-grid-item icon="hot-o" text="热卖" />
     </navigator>
-    <navigator url="/pages/goods-list/goods-list">
+    <navigator url="/pages/goods-list/goods-list?isGoodsListPriceDrop=1">
         <van-grid-item icon="discount" text="降价" />
     </navigator>
 </van-grid>

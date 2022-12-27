@@ -17,17 +17,7 @@ Page({
         //当前地址
         addressNow: [],
         //可选择的地址
-        actions: [{
-                id: 2,
-                name: '石霞 13112131229（学校）',
-                subname: '吉林省四平市梨树县霍家店街道12号'
-            },
-            {
-                id: 3,
-                name: '阎天昊 19034879089（公司）',
-                subname: '云南省保山市腾冲市团田乡33号'
-            },
-        ],
+        actions: [],
         //全部地址
         addressList: [],
         goodsList: []

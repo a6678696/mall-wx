@@ -28,6 +28,15 @@ Page({
         if (options.searchWord !== undefined) {
             this.loadDataSearchGoods(options.searchWord);
         }
+        if (options.isGoodsListNew !== undefined) {
+            this.loadDataGoodsListNew();
+        }
+        if (options.isGoodsListHot !== undefined) {
+            this.loadDataGoodsListHot();
+        }
+        if (options.isGoodsListPriceDrop !== undefined) {
+            this.loadDataGoodsListPriceDrop();
+        }
     },
 
     // 分类页面使用
@@ -48,13 +57,52 @@ Page({
     },
 
     // 搜索商品时使用
-    loadDataSearchGoods(searchWord){
+    loadDataSearchGoods(searchWord) {
         requestUtil({
             url: '/goods/listNoPage',
             method: 'GET',
             data: {
                 name: searchWord
             }
+        }).then(res => {
+            this.setData({
+                goodsList: res.data.goodsList
+            })
+        }).catch(err => {
+
+        })
+    },
+
+    loadDataGoodsListNew() {
+        requestUtil({
+            url: '/goods/getNewGoodsList',
+            method: 'GET'
+        }).then(res => {
+            this.setData({
+                goodsList: res.data.goodsList
+            })
+        }).catch(err => {
+
+        })
+    },
+
+    loadDataGoodsListHot() {
+        requestUtil({
+            url: '/goods/getHotGoodsList',
+            method: 'GET'
+        }).then(res => {
+            this.setData({
+                goodsList: res.data.goodsList
+            })
+        }).catch(err => {
+
+        })
+    },
+
+    loadDataGoodsListPriceDrop(){
+        requestUtil({
+            url: '/goods/getPriceDropGoodsList',
+            method: 'GET'
         }).then(res => {
             this.setData({
                 goodsList: res.data.goodsList
