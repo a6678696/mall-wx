@@ -2,38 +2,50 @@
 <view class="view_blrank"></view>
 <van-tabs active="{{ active }}" bind:change="onChange" title-active-color="#f35e09" color="#f35e09">
     <van-tab title="已完成" name="a">
-        <van-cell-group wx:for="{{3}}" wx:key="*this">
-            <van-cell title="2022-12-26 23:06:43" value="5343元" />
-            <view wx:for="{{3}}" wx:key="*this">
-                <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
+        <van-cell-group wx:for="{{orderListDone}}" wx:key="id">
+            <van-cell title="{{item.addDate}}" value="{{item.price+'元'}}" />
+            <view wx:for="{{item.orderGoodsList}}" wx:for-item="orderGoods" wx:key="*this">
+                <van-card num="{{orderGoods.num}}" price="{{orderGoods.goods.price}}" title="{{orderGoods.goods.name}}" thumb="{{baseUrl+'/image/goods/card/'+orderGoods.goods.cardImageName}}" />
             </view>
+            <van-cell>
+                <van-button size="small" type="info">查看详情</van-button>
+            </van-cell>
             <van-divider />
         </van-cell-group>
     </van-tab>
     <van-tab title="已付款" name="b">
-        <van-cell-group wx:for="{{3}}" wx:key="*this">
-            <van-cell title="2022-12-25 23:06:43" value="5343元" />
-            <view wx:for="{{3}}" wx:key="*this">
-                <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
+        <van-cell-group wx:for="{{orderListPay}}" wx:key="id">
+            <van-cell title="{{item.addDate}}" value="{{item.price+'元'}}" />
+            <view wx:for="{{item.orderGoodsList}}" wx:for-item="orderGoods" wx:key="*this">
+                <van-card num="{{orderGoods.num}}" price="{{orderGoods.goods.price}}" title="{{orderGoods.goods.name}}" thumb="{{baseUrl+'/image/goods/card/'+orderGoods.goods.cardImageName}}" />
             </view>
+            <van-cell>
+                <van-button size="small" type="info">查看详情</van-button>
+            </van-cell>
             <van-divider />
         </van-cell-group>
     </van-tab>
     <van-tab title="待付款" name="c">
-        <van-cell-group wx:for="{{3}}" wx:key="*this">
-            <van-cell title="2022-12-24 23:06:43" value="5343元" />
-            <view wx:for="{{3}}" wx:key="*this">
-                <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
+        <van-cell-group wx:for="{{orderListWantToPay}}" wx:key="id">
+            <van-cell title="{{item.addDate}}" value="{{item.price+'元'}}" />
+            <view wx:for="{{item.orderGoodsList}}" wx:for-item="orderGoods" wx:key="*this">
+                <van-card num="{{orderGoods.num}}" price="{{orderGoods.goods.price}}" title="{{orderGoods.goods.name}}" thumb="{{baseUrl+'/image/goods/card/'+orderGoods.goods.cardImageName}}" />
             </view>
+            <van-cell>
+                <van-button size="small" type="info">查看详情</van-button>
+            </van-cell>
             <van-divider />
         </van-cell-group>
     </van-tab>
     <van-tab title="已取消" name="d">
-        <van-cell-group wx:for="{{3}}" wx:key="*this"   >
-            <van-cell title="2022-12-23 23:06:43" value="5343元" />
-            <view wx:for="{{3}}" wx:key="*this">
-                <van-card num="2" price="2.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg" />
+        <van-cell-group wx:for="{{orderListCancel}}" wx:key="id">
+            <van-cell title="{{item.addDate}}" value="{{item.price+'元'}}" />
+            <view wx:for="{{item.orderGoodsList}}" wx:for-item="orderGoods" wx:key="*this">
+                <van-card num="{{orderGoods.num}}" price="{{orderGoods.goods.price}}" title="{{orderGoods.goods.name}}" thumb="{{baseUrl+'/image/goods/card/'+orderGoods.goods.cardImageName}}" />
             </view>
+            <van-cell>
+                <van-button size="small" type="info">查看详情</van-button>
+            </van-cell>
             <van-divider />
         </van-cell-group>
     </van-tab>

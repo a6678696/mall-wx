@@ -20,7 +20,8 @@ Page({
         actions: [],
         //全部地址
         addressList: [],
-        goodsList: []
+        goodsList: [],
+        orderId: 0
     },
 
     /**
@@ -78,6 +79,7 @@ Page({
         for (let i = 0; i < carts.length; i++) {
             if (carts[i].selected) {
                 goodsList[index] = {
+                    id: carts[i].id,
                     num: carts[i].num,
                     price: carts[i].price,
                     title: carts[i].title,
@@ -189,20 +191,103 @@ Page({
     },
 
     onSubmit() {
+        requestUtil({
+            url: '/order/save',
+            method: 'POST',
+            data: {
+                price: this.data.totalPrice,
+                customerId: wx.getStorageSync('currentCustomer').id,
+                address: this.data.addressNow[2],
+                phoneNum: this.data.addressNow[1].split(" ")[1],
+                customerName: this.data.addressNow[1].split(" ")[0],
+                state: 0
+            },
+            header: { //POST请求一定要加上这个content-type,不然无法传递参数
+                'content-type': 'application/x-www-form-urlencoded',
+            }
+        }).then(res => {
+            this.setData({
+                orderId: res.data.orderId
+            });
+            for (let i = 0; i < this.data.goodsList.length; i++) {
+                requestUtil({
+                    url: '/orderGoods/add',
+                    method: 'POST',
+                    data: {
+                        num: this.data.goodsList[i].num,
+                        goodsId: this.data.goodsList[i].id,
+                        orderId: this.data.orderId
+                    },
+                    header: { //POST请求一定要加上这个content-type,不然无法传递参数
+                        'content-type': 'application/x-www-form-urlencoded',
+                    }
+                }).then(res => {
+
+                }).catch(err => {
+
+                })
+            }
+        }).catch(err => {
+
+        })
+        let cartsNow = [];
+        let carts = wx.getStorageSync('carts');
+        for (let i = 0; i < carts.length; i++) {
+            if (!carts[i].selected) {
+                cartsNow.push(carts[i]);
+            }
+        }
+        wx.setStorageSync('carts', cartsNow);
         Toast.loading({
             message: '提交成功，正在拉起支付...',
             forbidClick: true,
             onClose: () => {
                 Dialog.confirm({
-                    title: '支付提示',
-                    message: '你确定要支付吗？',
-                })
-                .then(() => {
-                    // on confirm
-                })
-                .catch(() => {
-                    // on cancel
-                });
+                        title: '支付提示',
+                        message: '你确定要支付吗？',
+                    })
+                    .then(() => {
+                        // on confirm
+                        requestUtil({
+                            url: '/order/changeOrderState',
+                            method: 'POST',
+                            data: {
+                                orderId: this.data.orderId,
+                                state: 1
+                            },
+                            header: { //POST请求一定要加上这个content-type,不然无法传递参数
+                                'content-type': 'application/x-www-form-urlencoded',
+                            }
+                        }).then(res => {
+                            
+                        }).catch(err => {
+
+                        })
+                        wx.reLaunch({
+                            url: '/pages/order/order?activeNum=b',
+                        })
+                    })
+                    .catch(() => {
+                        // on cancel
+                        requestUtil({
+                            url: '/order/changeOrderState',
+                            method: 'POST',
+                            data: {
+                                orderId: this.data.orderId,
+                                state: 2
+                            },
+                            header: { //POST请求一定要加上这个content-type,不然无法传递参数
+                                'content-type': 'application/x-www-form-urlencoded',
+                            }
+                        }).then(res => {
+                            
+                        }).catch(err => {
+
+                        })
+                        wx.reLaunch({
+                            url: '/pages/order/order?activeNum=c',
+                        })
+                    });
             }
         });
     }
