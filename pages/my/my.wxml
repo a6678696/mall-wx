@@ -26,5 +26,5 @@
     </van-grid>
     <van-cell icon="location" is-link title="收货地址" link-type="navigateTo" url="/pages/address/address" />
     <van-cell icon="info" is-link title="个人信息" link-type="navigateTo" url="/pages/my-information-modify/my-information-modify" />
-    <van-cell icon="comment" is-link title="我的评论" link-type="navigateTo" url="/pages/address/address" />
+    <van-cell icon="comment" is-link title="我的评价" link-type="navigateTo" url="/pages/my-comment/my-comment" />
 </view>

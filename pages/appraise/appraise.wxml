@@ -1,0 +1,17 @@
+<!--pages/appraise/appraise.wxml-->
+<view class="page-body">
+  <view class="page-section">
+    <view class="page-section-title">评分</view>
+    <van-rate value="{{ value }}" bind:change="onChange" />
+  </view>
+  <view class="page-section">
+    <view class="page-section-title">内容</view>
+    <view class="textarea-wrp">
+      <textarea auto-focus="true" style="height: 3em" model:value="{{ content }}"/>
+    </view>
+  </view>
+</view>
+<view class="save_btn">
+    <van-button round size="small" color="linear-gradient(to right, #4bb0ff, #6149f6)" bindtap="appraise">确定</van-button>
+</view>
+<van-notify id="van-notify" />

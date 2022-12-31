@@ -1,0 +1,9 @@
+<!--pages/order-details/order-details.wxml-->
+<van-cell-group>
+    <van-cell title="{{order.addDate}}" value="{{order.price+'元'}}" />
+    <van-cell title="{{order.address}}" />
+    <view wx:for="{{order.orderGoodsList}}" wx:for-item="orderGoods" wx:key="id">
+        <van-card num="{{orderGoods.num}}" price="{{orderGoods.goods.price}}" title="{{orderGoods.goods.name}}" thumb="{{baseUrl+'/image/goods/card/'+orderGoods.goods.cardImageName}}">
+        </van-card>
+    </view>
+</van-cell-group>

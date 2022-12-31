@@ -14,7 +14,8 @@
         "van-col": "@vant/weapp/col/index",
         "van-tag": "@vant/weapp/tag/index",
         "van-rate": "@vant/weapp/rate/index",
-        "van-notify": "@vant/weapp/notify/index"
+        "van-notify": "@vant/weapp/notify/index",
+        "van-empty": "@vant/weapp/empty/index"
     },
     "navigationBarTitleText": "商品详情"
 }

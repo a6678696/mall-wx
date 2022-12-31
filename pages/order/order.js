@@ -1,4 +1,5 @@
 // pages/order/order.js
+import Dialog from '@vant/weapp/dialog/dialog';
 import {
     getBaseUrl,
     requestUtil
@@ -27,7 +28,6 @@ Page({
             active: options.activeNum,
             baseUrl
         });
-        this.loadData();
     },
 
     loadData() {
@@ -104,7 +104,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-
+        this.loadData();
     },
 
     /**
@@ -140,5 +140,122 @@ Page({
      */
     onShareAppMessage() {
 
+    },
+
+    /**
+     * 支付订单
+     * @param {*} e 
+     */
+    payOrder(e) {
+        const orderId = e.currentTarget.dataset.orderid;
+        Dialog.confirm({
+                title: '提示',
+                message: '你确定要支付这个订单吗?',
+            })
+            .then(() => {
+                // on confirm
+                requestUtil({
+                    url: '/order/changeOrderState',
+                    method: 'POST',
+                    data: {
+                        orderId: orderId,
+                        state: 1
+                    },
+                    header: { //POST请求一定要加上这个content-type,不然无法传递参数
+                        'content-type': 'application/x-www-form-urlencoded',
+                    }
+                }).then(res => {
+                    wx.reLaunch({
+                        url: '/pages/order/order?activeNum=b',
+                    })
+                }).catch(err => {
+
+                })
+            })
+            .catch(() => {
+                // on cancel
+            });
+    },
+
+    /**
+     * 取消订单
+     * @param {*} e 
+     */
+    cancelOrder(e) {
+        const orderId = e.currentTarget.dataset.orderid;
+        Dialog.confirm({
+                title: '提示',
+                message: '你确定要取消这个订单吗?',
+            })
+            .then(() => {
+                // on confirm
+                requestUtil({
+                    url: '/order/changeOrderState',
+                    method: 'POST',
+                    data: {
+                        orderId: orderId,
+                        state: 3
+                    },
+                    header: { //POST请求一定要加上这个content-type,不然无法传递参数
+                        'content-type': 'application/x-www-form-urlencoded',
+                    }
+                }).then(res => {
+                    wx.reLaunch({
+                        url: '/pages/order/order?activeNum=d',
+                    })
+                }).catch(err => {
+
+                })
+            })
+            .catch(() => {
+                // on cancel
+            });
+    },
+
+    /**
+     * 确认收货
+     * @param {*} e 
+     */
+    confirmOrder(e) {
+        const orderId = e.currentTarget.dataset.orderid;
+        Dialog.confirm({
+                title: '提示',
+                message: '你确定要确认收货吗?',
+            })
+            .then(() => {
+                // on confirm
+                requestUtil({
+                    url: '/order/changeOrderState',
+                    method: 'POST',
+                    data: {
+                        orderId: orderId,
+                        state: 4
+                    },
+                    header: { //POST请求一定要加上这个content-type,不然无法传递参数
+                        'content-type': 'application/x-www-form-urlencoded',
+                    }
+                }).then(res => {
+                    wx.reLaunch({
+                        url: '/pages/order/order?activeNum=a',
+                    })
+                }).catch(err => {
+
+                })
+            })
+            .catch(() => {
+                // on cancel
+            });
+    },
+
+    toAppraisePage(e) {
+        wx.navigateTo({
+            url: '/pages/appraise/appraise?orderGoodsId=' + e.currentTarget.dataset.id,
+        })
+    },
+
+    getOrderDetails(e) {
+        wx.navigateTo({
+            url: '/pages/order-details/order-details?orderId=' + e.currentTarget.dataset.orderid,
+        })
     }
 })

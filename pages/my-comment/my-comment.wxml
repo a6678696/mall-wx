@@ -1,0 +1,13 @@
+<!--pages/my-comment/my-comment.wxml-->
+<view wx:for="{{valuationList}}">
+    <van-cell-group>
+        <van-cell title="{{item.addDate}}" icon="clock-o" />
+    </van-cell-group>
+    <navigator url="{{'/pages/goods/goods?id='+item.goodsId}}">
+        <van-card price="{{item.goods.price}}" title="{{item.goods.name}}" thumb="{{ baseUrl+'/image/goods/card/'+item.goods.cardImageName }}" />
+    </navigator>
+    <van-cell-group>
+        <van-cell label="{{item.content}}" />
+    </van-cell-group>
+    <van-divider />
+</view>

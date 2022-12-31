@@ -1,52 +1,88 @@
 <!--pages/order/order.wxml-->
 <view class="view_blrank"></view>
-<van-tabs active="{{ active }}" bind:change="onChange" title-active-color="#f35e09" color="#f35e09">
+<van-tabs active="{{ active }}" title-active-color="#f35e09" color="#f35e09">
     <van-tab title="已完成" name="a">
-        <van-cell-group wx:for="{{orderListDone}}" wx:key="id">
-            <van-cell title="{{item.addDate}}" value="{{item.price+'元'}}" />
-            <view wx:for="{{item.orderGoodsList}}" wx:for-item="orderGoods" wx:key="*this">
-                <van-card num="{{orderGoods.num}}" price="{{orderGoods.goods.price}}" title="{{orderGoods.goods.name}}" thumb="{{baseUrl+'/image/goods/card/'+orderGoods.goods.cardImageName}}" />
-            </view>
-            <van-cell>
-                <van-button size="small" type="info">查看详情</van-button>
-            </van-cell>
-            <van-divider />
-        </van-cell-group>
+        <view wx:if="{{orderListDone.length>0}}">
+            <van-cell-group wx:for="{{orderListDone}}" wx:key="id">
+                <van-cell title="{{item.addDate}}" value="{{item.price+'元'}}" />
+                <view wx:for="{{item.orderGoodsList}}" wx:for-item="orderGoods" wx:key="id">
+                    <navigator url="{{'/pages/goods/goods?id='+orderGoods.goodsId}}">
+                        <van-card num="{{orderGoods.num}}" price="{{orderGoods.goods.price}}" title="{{orderGoods.goods.name}}" thumb="{{baseUrl+'/image/goods/card/'+orderGoods.goods.cardImageName}}">
+                            <view slot="footer">
+                                <van-button type="primary" round plain size="mini" wx:if="{{orderGoods.appraiseState===0}}" bindtap="toAppraisePage" data-id="{{orderGoods.id}}">评价</van-button>
+                            </view>
+                        </van-card>
+                    </navigator>
+                </view>
+                <van-cell>
+                    <van-button size="small" type="info" bindtap="getOrderDetails" data-orderId="{{item.id}}">查看详情</van-button>
+                </van-cell>
+                <van-divider />
+            </van-cell-group>
+        </view>
+        <view wx:else>
+            <van-empty class="custom-image" image="/images/no.png" description="当前没有符合条件的订单" />
+        </view>
     </van-tab>
     <van-tab title="已付款" name="b">
-        <van-cell-group wx:for="{{orderListPay}}" wx:key="id">
-            <van-cell title="{{item.addDate}}" value="{{item.price+'元'}}" />
-            <view wx:for="{{item.orderGoodsList}}" wx:for-item="orderGoods" wx:key="*this">
-                <van-card num="{{orderGoods.num}}" price="{{orderGoods.goods.price}}" title="{{orderGoods.goods.name}}" thumb="{{baseUrl+'/image/goods/card/'+orderGoods.goods.cardImageName}}" />
-            </view>
-            <van-cell>
-                <van-button size="small" type="info">查看详情</van-button>
-            </van-cell>
-            <van-divider />
-        </van-cell-group>
+        <view wx:if="{{orderListPay.length>0}}">
+            <van-cell-group wx:for="{{orderListPay}}" wx:key="id">
+                <van-cell title="{{item.addDate}}" value="{{item.price+'元'}}" />
+                <view wx:for="{{item.orderGoodsList}}" wx:for-item="orderGoods" wx:key="id">
+                    <navigator url="{{'/pages/goods/goods?id='+orderGoods.goodsId}}">
+                        <van-card num="{{orderGoods.num}}" price="{{orderGoods.goods.price}}" title="{{orderGoods.goods.name}}" thumb="{{baseUrl+'/image/goods/card/'+orderGoods.goods.cardImageName}}" />
+                    </navigator>
+                </view>
+                <van-cell>
+                    <van-button size="small" type="primary" bindtap="confirmOrder" data-orderId="{{item.id}}">确认收货</van-button>
+                    <van-button size="small" type="info" class="btn_blank" bindtap="getOrderDetails" data-orderId="{{item.id}}">查看详情</van-button>
+                </van-cell>
+                <van-divider />
+            </van-cell-group>
+        </view>
+        <view wx:else>
+            <van-empty class="custom-image" image="/images/no.png" description="当前没有符合条件的订单" />
+        </view>
     </van-tab>
     <van-tab title="待付款" name="c">
-        <van-cell-group wx:for="{{orderListWantToPay}}" wx:key="id">
-            <van-cell title="{{item.addDate}}" value="{{item.price+'元'}}" />
-            <view wx:for="{{item.orderGoodsList}}" wx:for-item="orderGoods" wx:key="*this">
-                <van-card num="{{orderGoods.num}}" price="{{orderGoods.goods.price}}" title="{{orderGoods.goods.name}}" thumb="{{baseUrl+'/image/goods/card/'+orderGoods.goods.cardImageName}}" />
-            </view>
-            <van-cell>
-                <van-button size="small" type="info">查看详情</van-button>
-            </van-cell>
-            <van-divider />
-        </van-cell-group>
+        <view wx:if="{{orderListWantToPay.length>0}}">
+            <van-cell-group wx:for="{{orderListWantToPay}}" wx:key="id">
+                <van-cell title="{{item.addDate}}" value="{{item.price+'元'}}" />
+                <view wx:for="{{item.orderGoodsList}}" wx:for-item="orderGoods" wx:key="id">
+                    <navigator url="{{'/pages/goods/goods?id='+orderGoods.goodsId}}">
+                        <van-card num="{{orderGoods.num}}" price="{{orderGoods.goods.price}}" title="{{orderGoods.goods.name}}" thumb="{{baseUrl+'/image/goods/card/'+orderGoods.goods.cardImageName}}" />
+                    </navigator>
+                </view>
+                <van-cell>
+                    <van-button size="small" type="primary" bindtap="payOrder" data-orderId="{{item.id}}">支付</van-button>
+                    <van-button size="small" type="danger" class="btn_blank" bindtap="cancelOrder" data-orderId="{{item.id}}">取消</van-button>
+                    <van-button size="small" type="info" class="btn_blank" bindtap="getOrderDetails" data-orderId="{{item.id}}">查看详情</van-button>
+                </van-cell>
+                <van-divider />
+            </van-cell-group>
+        </view>
+        <view wx:else>
+            <van-empty class="custom-image" image="/images/no.png" description="当前没有符合条件的订单" />
+        </view>
     </van-tab>
     <van-tab title="已取消" name="d">
-        <van-cell-group wx:for="{{orderListCancel}}" wx:key="id">
-            <van-cell title="{{item.addDate}}" value="{{item.price+'元'}}" />
-            <view wx:for="{{item.orderGoodsList}}" wx:for-item="orderGoods" wx:key="*this">
-                <van-card num="{{orderGoods.num}}" price="{{orderGoods.goods.price}}" title="{{orderGoods.goods.name}}" thumb="{{baseUrl+'/image/goods/card/'+orderGoods.goods.cardImageName}}" />
-            </view>
-            <van-cell>
-                <van-button size="small" type="info">查看详情</van-button>
-            </van-cell>
-            <van-divider />
-        </van-cell-group>
+        <view wx:if="{{orderListCancel.length>0}}">
+            <van-cell-group wx:for="{{orderListCancel}}" wx:key="id">
+                <van-cell title="{{item.addDate}}" value="{{item.price+'元'}}" />
+                <view wx:for="{{item.orderGoodsList}}" wx:for-item="orderGoods" wx:key="id">
+                    <navigator url="{{'/pages/goods/goods?id='+orderGoods.goodsId}}">
+                        <van-card num="{{orderGoods.num}}" price="{{orderGoods.goods.price}}" title="{{orderGoods.goods.name}}" thumb="{{baseUrl+'/image/goods/card/'+orderGoods.goods.cardImageName}}" />
+                    </navigator>
+                </view>
+                <van-cell>
+                    <van-button size="small" type="info" bindtap="getOrderDetails" data-orderId="{{item.id}}">查看详情</van-button>
+                </van-cell>
+                <van-divider />
+            </van-cell-group>
+        </view>
+        <view wx:else>
+            <van-empty class="custom-image" image="/images/no.png" description="当前没有符合条件的订单" />
+        </view>
     </van-tab>
 </van-tabs>
+<van-dialog id="van-dialog" />

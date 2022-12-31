@@ -14,7 +14,10 @@
         "pages/search-page/search-page",
         "pages/confirm-order/confirm-order",
         "pages/announcement/announcement",
-        "pages/my-information-modify/my-information-modify"
+        "pages/my-information-modify/my-information-modify",
+        "pages/appraise/appraise",
+        "pages/my-comment/my-comment",
+        "pages/order-details/order-details"
     ],
     "tabBar": {
         "custom": true,

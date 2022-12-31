@@ -20,8 +20,8 @@ Page({
         details: '',
         cardImageName: '',
         goodsNum: 0,
-        stars: 4.5,
-        swiperImageList: []
+        swiperImageList: [],
+        valuationList: []
     },
 
     /**
@@ -39,6 +39,7 @@ Page({
     //加载数据
     loadData(id) {
         let swiperImageList = [];
+        //获取商品信息
         requestUtil({
             url: '/goods/findById',
             method: 'GET',
@@ -61,6 +62,20 @@ Page({
                 cardImageName: res.data.goods.cardImageName,
                 swiperImageList: swiperImageList,
                 details: res.data.goods.details,
+            })
+        }).catch(err => {
+
+        })
+        //获取评价
+        requestUtil({
+            url: '/valuation/listNoPage',
+            method: 'GET',
+            data: {
+                goodsId: id
+            }
+        }).then(res => {
+            this.setData({
+                valuationList: res.data.valuationList
             })
         }).catch(err => {
 
@@ -112,10 +127,10 @@ Page({
         })
     },
 
-    toCart(){
+    toCart() {
         this.addGoodsToCart();
         wx.navigateTo({
-          url: '/pages/cart/cart',
+            url: '/pages/cart/cart',
         })
     },
 

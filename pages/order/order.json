@@ -9,7 +9,9 @@
         "van-cell-group": "@vant/weapp/cell-group/index",
         "van-tag": "@vant/weapp/tag/index",
         "van-button": "@vant/weapp/button/index",
-        "van-divider": "@vant/weapp/divider/index"
+        "van-divider": "@vant/weapp/divider/index",
+        "van-empty": "@vant/weapp/empty/index",
+        "van-dialog": "@vant/weapp/dialog/index"
     },
     "navigationBarTitleText": "订单"
 }

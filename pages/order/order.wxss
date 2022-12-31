@@ -4,3 +4,6 @@
 .tags_blank {
   margin-left: 6rpx;
 }
+.btn_blank {
+  margin-left: 3rpx;
+}
