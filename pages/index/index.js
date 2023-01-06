@@ -20,12 +20,15 @@ Page({
         let swiperImageList = new Array();
         requestUtil({
             url: '/goods/getIndexSwiperGoodsList',
-            method: 'GET'
+            method: 'GET',
+            header: {
+                'token': wx.getStorageSync('token')
+            }
         }).then(res => {
             let goodsList = res.data.goodsList;
             for (let i = 0; i < goodsList.length; i++) {
                 //只展示前6个首页轮播图商品
-                if(i===6){
+                if (i === 6) {
                     break;
                 }
                 swiperImageList[i] = {
@@ -43,6 +46,9 @@ Page({
         requestUtil({
             url: '/goods/getRecommendGoodsList',
             method: 'GET',
+            header: {
+                'token': wx.getStorageSync('token')
+            }
         }).then(res => {
             this.setData({
                 recommendGoodsList: res.data.goodsList
@@ -55,11 +61,49 @@ Page({
         this.setData({
             baseUrl
         });
+        this.checkToken();
+    },
+
+    checkToken() {
+        let flag = true;
+        if (wx.getStorageSync('token') !== null) {
+            requestUtil({
+                url: '/token/check',
+                method: 'GET',
+                data: {
+                    token: wx.getStorageSync('token')
+                },
+                header: {
+                    'token': wx.getStorageSync('token')
+                }
+            }).then(result => {
+                //token验证成功
+                if (result.data.code === 0) {
+                    if (result.data.roleName !== 'customer') {
+                        flag = false;
+                        console.log('当前用户身份不是customer');
+                        wx.removeStorageSync('token');
+                        wx.removeStorageSync('currentCustomer');
+                    } else {
+                        flag = true;
+                    }
+                } else if (result.data.code === 500) {
+                    flag = false;
+                    console.log("token验证失败");
+                    wx.removeStorageSync('token');
+                    wx.removeStorageSync('currentCustomer');
+                }
+                this.login();
+            })
+        }
+    },
+
+    login() {
         //当顾客未登录时
         if (!wx.getStorageSync('currentCustomer')) {
             //登录
             wx.login({
-                success: (res) => {//登录成功
+                success: (res) => { //登录成功
                     //请求后端,给后端发送code以获取openid
                     requestUtil({
                         url: '/customer/login',
@@ -67,17 +111,22 @@ Page({
                         data: {
                             loginCode: res.code
                         },
-                        header: {//POST请求一定要加上这个content-type,不然无法传递参数
+                        header: { //POST请求一定要加上这个content-type,不然无法传递参数
                             'content-type': 'application/x-www-form-urlencoded',
+                            'token': wx.getStorageSync('token')
                         }
                     }).then(result => {
                         //后端返回一个customer对象
                         wx.setStorageSync('currentCustomer', result.data.customer);
+                        wx.setStorageSync('token', result.data.token);
+                        this.getSwiperImageList();
+                        this.getRecommendGoodsList();
                     })
                 },
             })
+        } else {
+            this.getSwiperImageList();
+            this.getRecommendGoodsList();
         }
-        this.getSwiperImageList();
-        this.getRecommendGoodsList();
     }
 })

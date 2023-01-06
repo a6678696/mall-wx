@@ -46,6 +46,9 @@ Page({
             method: 'GET',
             data: {
                 smallTypeId: smallTypeId
+            },
+            header:{
+                'token':wx.getStorageSync('token')
             }
         }).then(res => {
             this.setData({
@@ -63,6 +66,9 @@ Page({
             method: 'GET',
             data: {
                 name: searchWord
+            },
+            header:{
+                'token':wx.getStorageSync('token')
             }
         }).then(res => {
             this.setData({
@@ -76,7 +82,10 @@ Page({
     loadDataGoodsListNew() {
         requestUtil({
             url: '/goods/getNewGoodsList',
-            method: 'GET'
+            method: 'GET',
+            header:{
+                'token':wx.getStorageSync('token')
+            }
         }).then(res => {
             this.setData({
                 goodsList: res.data.goodsList
@@ -89,7 +98,10 @@ Page({
     loadDataGoodsListHot() {
         requestUtil({
             url: '/goods/getHotGoodsList',
-            method: 'GET'
+            method: 'GET',
+            header:{
+                'token':wx.getStorageSync('token')
+            }
         }).then(res => {
             this.setData({
                 goodsList: res.data.goodsList
@@ -102,7 +114,10 @@ Page({
     loadDataGoodsListPriceDrop(){
         requestUtil({
             url: '/goods/getPriceDropGoodsList',
-            method: 'GET'
+            method: 'GET',
+            header:{
+                'token':wx.getStorageSync('token')
+            }
         }).then(res => {
             this.setData({
                 goodsList: res.data.goodsList

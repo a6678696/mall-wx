@@ -39,6 +39,9 @@ Page({
             method: 'GET',
             data: {
                 id: options.id
+            },
+            header:{
+                'token':wx.getStorageSync('token')
             }
         }).then(res => {
             this.setData({
@@ -147,6 +150,7 @@ Page({
             },
             header: { //POST请求一定要加上这个content-type,不然无法传递参数
                 'content-type': 'application/x-www-form-urlencoded',
+                'token':wx.getStorageSync('token')
             }
         }).then(res => {
             wx.navigateBack();

@@ -3,7 +3,7 @@
   padding: 10rpx;
   background-color: var(--themeColor);
 }
-.search_bar navigator {
+.search_bar .navigator {
   height: 100%;
   display: flex;
   justify-content: center;
@@ -12,6 +12,6 @@
   color: #666666;
   border-radius: 15rpx;
 }
-.search_bar navigator text {
+.search_bar .navigator .text {
   font-size: 33rpx;
 }

@@ -1,5 +1,8 @@
 // pages/my-comment/my-comment.js
-import {getBaseUrl,requestUtil} from '../../utils/requestUtil.js'
+import {
+    getBaseUrl,
+    requestUtil
+} from '../../utils/requestUtil.js'
 
 Page({
 
@@ -28,6 +31,9 @@ Page({
             method: 'GET',
             data: {
                 customerId: wx.getStorageSync('currentCustomer').id
+            },
+            header: {
+                'token': wx.getStorageSync('token')
             }
         }).then(res => {
             this.setData({

@@ -1,9 +1,9 @@
 <!--components/banner/banner.wxml-->
 <view class="banner">
-    <swiper indicator-dots indicator-active-color="#ff6200" circular autoplay interval="3000">
+    <swiper class="swiper" indicator-dots indicator-active-color="#ff6200" circular autoplay interval="3000">
         <swiper-item wx:for="{{swiperImageList}}" wx:key="id">
             <navigator url="{{item.url}}">
-                <image mode="widthFix" src="{{item.imageUrl}}"></image>
+                <image class="image" mode="widthFix" src="{{item.imageUrl}}"></image>
             </navigator>
         </swiper-item>
     </swiper>

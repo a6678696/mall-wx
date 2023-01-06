@@ -1,9 +1,0 @@
-<!--pages/footprint/footprint.wxml-->
-<view wx:for="{{6}}" wx:key="id">
-    <van-card price="10.00" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg">
-        <view slot="footer">
-            <van-button type="danger" size="mini">删除</van-button>
-        </view>
-    </van-card>
-    <view class="view_blank"></view>
-</view>

@@ -101,6 +101,9 @@ Page({
                 page: currentPage,
                 size: pageSize
             },
+            header:{
+                'token':wx.getStorageSync('token')
+            }
         }).then(res => {
             announcementList = res.data.announcementList;
             if (announcementList.length > 0) {

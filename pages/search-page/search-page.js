@@ -50,6 +50,9 @@ Page({
         requestUtil({
             url: '/goods/getRecommendGoodsList',
             method: 'GET',
+            header:{
+                'token':wx.getStorageSync('token')
+            }
         }).then(res => {
             this.setData({
                 recommendGoodsList: res.data.goodsList

@@ -92,6 +92,9 @@ Page({
             formData: {
                 id: 1
             },
+            header: {
+                'token': wx.getStorageSync('token')
+            },
             success(res) {
                 // 上传完成需要更新 fileList
                 let fileList = [];
@@ -113,6 +116,9 @@ Page({
             method: 'GET',
             data: {
                 url: url
+            },
+            header:{
+                'token':wx.getStorageSync('token')
             }
         }).then(res => {
             this.setData({
@@ -131,10 +137,11 @@ Page({
             data: {
                 id: this.data.id,
                 nickName: this.data.nickName,
-                url: this.data.fileList.length===0?'':this.data.fileList[0].url
+                url: this.data.fileList.length === 0 ? '' : this.data.fileList[0].url
             },
             header: { //POST请求一定要加上这个content-type,不然无法传递参数
                 'content-type': 'application/x-www-form-urlencoded',
+                'token': wx.getStorageSync('token')
             }
         }).then(res => {
             let currentCustomer = {

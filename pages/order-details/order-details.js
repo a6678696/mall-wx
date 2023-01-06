@@ -33,6 +33,9 @@ Page({
             method: 'GET',
             data: {
                 id: this.data.orderId
+            },
+            header:{
+                'token':wx.getStorageSync('token')
             }
         }).then(res => {
             this.setData({

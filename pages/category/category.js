@@ -41,6 +41,9 @@ Page({
         requestUtil({
             url: '/bigType/getAllBigType',
             method: 'GET',
+            header:{
+                'token':wx.getStorageSync('token')
+            }
         }).then(res => {
             let allBigTypeList = res.data.allBigTypeList;
             if (allBigTypeList.length > 0) {

@@ -45,6 +45,9 @@ Page({
             method: 'GET',
             data: {
                 id: id
+            },
+            header:{
+                'token':wx.getStorageSync('token')
             }
         }).then(res => {
             for (let i = 0; i < res.data.goods.swiperImageNameList.length; i++) {
@@ -72,6 +75,9 @@ Page({
             method: 'GET',
             data: {
                 goodsId: id
+            },
+            header:{
+                'token':wx.getStorageSync('token')
             }
         }).then(res => {
             this.setData({
