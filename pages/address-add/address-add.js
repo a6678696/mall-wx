@@ -31,68 +31,26 @@ Page({
             baseUrl
         });
         this.setData({
+            baseUrl,
             customerAvatarImageUrl: this.data.baseUrl + '/image/customer/avatar/' + wx.getStorageSync('currentCustomer').avatarImageName
         });
     },
 
     /**
-     * 生命周期函数--监听页面初次渲染完成
+     * 获取子组件的值(选择的省市区)
+     * @param {*} e 
      */
-    onReady() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom() {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
-
-    },
-
     sendMessage(e) {
-        console.log(e.detail);
         this.setData({
             area: e.detail.split(",")[0],
             areaCode: e.detail.split(",")[1]
         })
     },
 
-    addAddress() {
+    /**
+     * 添加收货地址
+     */
+    async addAddress() {
         if (this.data.name === '') {
             Notify('请输入姓名');
             return false;
@@ -113,7 +71,7 @@ Page({
             Notify('请输入地址说明');
             return false;
         }
-        requestUtil({
+        await requestUtil({
             url: '/address/save',
             method: 'POST',
             data: {
@@ -124,15 +82,8 @@ Page({
                 areaCode: this.data.areaCode,
                 details: this.data.details,
                 description: this.data.description
-            },
-            header: { //POST请求一定要加上这个content-type,不然无法传递参数
-                'content-type': 'application/x-www-form-urlencoded',
-                'token':wx.getStorageSync('token')
             }
-        }).then(res => {
-            wx.navigateBack();
-        }).catch(err => {
-
-        })
+        });
+        wx.navigateBack();
     }
 })

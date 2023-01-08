@@ -31,29 +31,32 @@ Page({
             baseUrl
         });
         this.setData({
+            baseUrl,
             customerAvatarImageUrl: this.data.baseUrl + '/image/customer/avatar/' + wx.getStorageSync('currentCustomer').avatarImageName,
-            id:options.id
+            id: options.id
         });
-        requestUtil({
+        this.findAddressById(this.data.id);
+    },
+
+    /**
+     * 根据id获取收货地址
+     * @param {*} id 
+     */
+    async findAddressById(id) {
+        const res = await requestUtil({
             url: '/address/findById',
             method: 'GET',
             data: {
-                id: options.id
-            },
-            header:{
-                'token':wx.getStorageSync('token')
+                id
             }
-        }).then(res => {
-            this.setData({
-                name: res.data.address.name,
-                phoneNum: res.data.address.phoneNum,
-                details: res.data.address.details,
-                description: res.data.address.description,
-                areaCode: res.data.address.areaCode,
-                area: res.data.address.area,
-            })
-        }).catch(err => {
-
+        });
+        this.setData({
+            name: res.data.address.name,
+            phoneNum: res.data.address.phoneNum,
+            details: res.data.address.details,
+            description: res.data.address.description,
+            areaCode: res.data.address.areaCode,
+            area: res.data.address.area,
         })
     },
 
@@ -106,15 +109,21 @@ Page({
 
     },
 
+    /**
+     * 获取子组件的值(选择的省市区)
+     * @param {*} e 
+     */
     sendMessage(e) {
-        console.log(e.detail);
         this.setData({
             area: e.detail.split(",")[0],
             areaCode: e.detail.split(",")[1]
         })
     },
 
-    saveAddress() {
+    /**
+     * 保存收货地址
+     */
+    async saveAddress() {
         if (this.data.name === '') {
             Notify('请输入姓名');
             return false;
@@ -135,7 +144,8 @@ Page({
             Notify('请输入地址说明');
             return false;
         }
-        requestUtil({
+        //保存
+        await requestUtil({
             url: '/address/save',
             method: 'POST',
             data: {
@@ -147,15 +157,9 @@ Page({
                 areaCode: this.data.areaCode,
                 details: this.data.details,
                 description: this.data.description
-            },
-            header: { //POST请求一定要加上这个content-type,不然无法传递参数
-                'content-type': 'application/x-www-form-urlencoded',
-                'token':wx.getStorageSync('token')
             }
-        }).then(res => {
-            wx.navigateBack();
-        }).catch(err => {
-
-        })
+        });
+        //返回上一页
+        wx.navigateBack();
     }
 })

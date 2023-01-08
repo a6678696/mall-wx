@@ -30,86 +30,61 @@ Page({
         });
     },
 
-    loadData() {
+    /**
+     * 加载数据
+     */
+    async loadData() {
         //获取已完成的订单
-        requestUtil({
+        const res = await requestUtil({
             url: '/order/listNoPage',
             method: 'GET',
             data: {
                 customerId: wx.getStorageSync('currentCustomer').id,
                 state: 4
-            },
-            header:{
-                'token':wx.getStorageSync('token')
             }
-        }).then(res => {
-            this.setData({
-                orderListDone: res.data.orderList
-            })
-        }).catch(err => {
-
+        });
+        this.setData({
+            orderListDone: res.data.orderList
         })
+
         //获取已付款的订单
-        requestUtil({
+        const res2 = await requestUtil({
             url: '/order/listNoPage',
             method: 'GET',
             data: {
                 customerId: wx.getStorageSync('currentCustomer').id,
                 state: 1
-            },
-            header:{
-                'token':wx.getStorageSync('token')
             }
-        }).then(res => {
-            this.setData({
-                orderListPay: res.data.orderList
-            })
-        }).catch(err => {
-
+        });
+        this.setData({
+            orderListPay: res2.data.orderList
         })
+
         //获取待付款的订单
-        requestUtil({
+        const res3 = await requestUtil({
             url: '/order/listNoPage',
             method: 'GET',
             data: {
                 customerId: wx.getStorageSync('currentCustomer').id,
                 state: 2
-            },
-            header:{
-                'token':wx.getStorageSync('token')
             }
-        }).then(res => {
-            this.setData({
-                orderListWantToPay: res.data.orderList
-            })
-        }).catch(err => {
-
+        });
+        this.setData({
+            orderListWantToPay: res3.data.orderList
         })
+
         //获取已取消的订单
-        requestUtil({
+        const res4 = await requestUtil({
             url: '/order/listNoPage',
             method: 'GET',
             data: {
                 customerId: wx.getStorageSync('currentCustomer').id,
                 state: 3
-            },
-            header:{
-                'token':wx.getStorageSync('token')
             }
-        }).then(res => {
-            this.setData({
-                orderListCancel: res.data.orderList
-            })
-        }).catch(err => {
-
+        });
+        this.setData({
+            orderListCancel: res4.data.orderList
         })
-    },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady() {
-
     },
 
     /**
@@ -117,41 +92,6 @@ Page({
      */
     onShow() {
         this.loadData();
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom() {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
-
     },
 
     /**
@@ -172,10 +112,6 @@ Page({
                     data: {
                         orderId: orderId,
                         state: 1
-                    },
-                    header: { //POST请求一定要加上这个content-type,不然无法传递参数
-                        'content-type': 'application/x-www-form-urlencoded',
-                        'token':wx.getStorageSync('token')
                     }
                 }).then(res => {
                     wx.reLaunch({
@@ -208,10 +144,6 @@ Page({
                     data: {
                         orderId: orderId,
                         state: 3
-                    },
-                    header: { //POST请求一定要加上这个content-type,不然无法传递参数
-                        'content-type': 'application/x-www-form-urlencoded',
-                        'token':wx.getStorageSync('token')
                     }
                 }).then(res => {
                     wx.reLaunch({
@@ -244,10 +176,6 @@ Page({
                     data: {
                         orderId: orderId,
                         state: 4
-                    },
-                    header: { //POST请求一定要加上这个content-type,不然无法传递参数
-                        'content-type': 'application/x-www-form-urlencoded',
-                        'token':wx.getStorageSync('token')
                     }
                 }).then(res => {
                     wx.reLaunch({
@@ -262,12 +190,20 @@ Page({
             });
     },
 
+    /**
+     * 跳转到评价页面
+     * @param {*} e 
+     */
     toAppraisePage(e) {
         wx.navigateTo({
             url: '/pages/appraise/appraise?orderGoodsId=' + e.currentTarget.dataset.id,
         })
     },
 
+    /**
+     * 跳转到订单详情页面
+     * @param {*} e 
+     */
     getOrderDetails(e) {
         wx.navigateTo({
             url: '/pages/order-details/order-details?orderId=' + e.currentTarget.dataset.orderid,

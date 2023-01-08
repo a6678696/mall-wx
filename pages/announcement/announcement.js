@@ -1,6 +1,8 @@
 // pages/announcement/announcement.js
 import Notify from '@vant/weapp/notify/notify';
-import {requestUtil} from '../../utils/requestUtil.js'
+import {
+    requestUtil
+} from '../../utils/requestUtil.js'
 
 Page({
 
@@ -16,38 +18,10 @@ Page({
     },
 
     /**
-     * 生命周期函数--监听页面加载
-     */
-    onLoad(options) {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady() {
-
-    },
-
-    /**
      * 生命周期函数--监听页面显示
      */
     onShow() {
         this.loadData();
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload() {
-
     },
 
     /**
@@ -77,51 +51,28 @@ Page({
         this.loadData();
     },
 
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
-
-    },
-
     onChange(event) {
         this.setData({
             activeName: event.detail,
         });
     },
 
-    loadData() {
-        let announcementList;
+    /**
+     * 加载数据
+     */
+    async loadData() {
         let currentPage = this.data.currentPage;
         let pageSize = this.data.pageSize;
-        requestUtil({
+        const res = await requestUtil({
             url: '/announcement/list',
             method: 'GET',
             data: {
                 page: currentPage,
                 size: pageSize
-            },
-            header:{
-                'token':wx.getStorageSync('token')
             }
-        }).then(res => {
-            announcementList = res.data.announcementList;
-            if (announcementList.length > 0) {
-                for (let i = 0; i < announcementList.length; i++) {
-                    announcementList[i] = {
-                        name: i,
-                        id: announcementList[i].id,
-                        title: announcementList[i].title,
-                        content: announcementList[i].content,
-                        addDate: announcementList[i].addDate
-                    };
-                }
-                this.setData({
-                    announcementList
-                });
-            }
-        }).catch(err => {
-
-        })
+        });
+        this.setData({
+            announcementList: res.data.announcementList
+        });
     }
 })

@@ -1,11 +1,10 @@
 // pages/confirm-order/confirm-order.js
 import Toast from '@vant/weapp/toast/toast';
 import Dialog from '@vant/weapp/dialog/dialog';
-
 import {
-    getBaseUrl,
     requestUtil
 } from '../../utils/requestUtil.js'
+
 Page({
 
     /**
@@ -38,9 +37,6 @@ Page({
             method: 'GET',
             data: {
                 customerId: wx.getStorageSync('currentCustomer').id
-            },
-            header:{
-                'token':wx.getStorageSync('token')
             }
         }).then(res => {
             let addressList2 = res.data.addressList;
@@ -73,9 +69,7 @@ Page({
                 actions,
                 addressList
             })
-        }).catch(err => {
-
-        })
+        });
         let carts = wx.getStorageSync('carts');
         let index = 0;
         let goodsList = [];
@@ -97,13 +91,6 @@ Page({
     },
 
     /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady() {
-
-    },
-
-    /**
      * 生命周期函数--监听页面显示
      */
     onShow() {
@@ -111,47 +98,18 @@ Page({
     },
 
     /**
-     * 生命周期函数--监听页面隐藏
+     * 打开或关闭选择地址的弹出层
      */
-    onHide() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom() {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
-
-    },
-
     showOrCloseSelectAddress() {
-        const showAddressSelect = !this.data.showAddressSelect;
         this.setData({
-            showAddressSelect: showAddressSelect
+            showAddressSelect: !this.data.showAddressSelect
         });
     },
 
+    /**
+     * 选择地址后
+     * @param {*} e 
+     */
     onSelectAddress(e) {
         this.showOrCloseSelectAddress();
         const selectedId = e.detail.id;
@@ -182,6 +140,9 @@ Page({
         });
     },
 
+    /**
+     * 计算总价
+     */
     getTotalPrice() {
         let goodsList = this.data.goodsList;
         let totalPrice = 0;
@@ -193,8 +154,12 @@ Page({
         });
     },
 
-    onSubmit() {
-        requestUtil({
+    /**
+     * 提交订单
+     */
+    async onSubmit() {
+        //保存订单
+        const res = await requestUtil({
             url: '/order/save',
             method: 'POST',
             data: {
@@ -204,37 +169,23 @@ Page({
                 phoneNum: this.data.addressNow[1].split(" ")[1],
                 customerName: this.data.addressNow[1].split(" ")[0],
                 state: 0
-            },
-            header: { //POST请求一定要加上这个content-type,不然无法传递参数
-                'content-type': 'application/x-www-form-urlencoded',
-                'token':wx.getStorageSync('token')
             }
-        }).then(res => {
-            this.setData({
-                orderId: res.data.orderId
+        });
+        this.setData({
+            orderId: res.data.orderId
+        });
+        //保存订单商品
+        for (let i = 0; i < this.data.goodsList.length; i++) {
+            await requestUtil({
+                url: '/orderGoods/add',
+                method: 'POST',
+                data: {
+                    num: this.data.goodsList[i].num,
+                    goodsId: this.data.goodsList[i].id,
+                    orderId: this.data.orderId
+                }
             });
-            for (let i = 0; i < this.data.goodsList.length; i++) {
-                requestUtil({
-                    url: '/orderGoods/add',
-                    method: 'POST',
-                    data: {
-                        num: this.data.goodsList[i].num,
-                        goodsId: this.data.goodsList[i].id,
-                        orderId: this.data.orderId
-                    },
-                    header: { //POST请求一定要加上这个content-type,不然无法传递参数
-                        'content-type': 'application/x-www-form-urlencoded',
-                        'token':wx.getStorageSync('token')
-                    }
-                }).then(res => {
-
-                }).catch(err => {
-
-                })
-            }
-        }).catch(err => {
-
-        })
+        }
         let cartsNow = [];
         let carts = wx.getStorageSync('carts');
         for (let i = 0; i < carts.length; i++) {
@@ -259,16 +210,8 @@ Page({
                             data: {
                                 orderId: this.data.orderId,
                                 state: 1
-                            },
-                            header: { //POST请求一定要加上这个content-type,不然无法传递参数
-                                'content-type': 'application/x-www-form-urlencoded',
-                                'token':wx.getStorageSync('token')
                             }
-                        }).then(res => {
-                            
-                        }).catch(err => {
-
-                        })
+                        });
                         wx.reLaunch({
                             url: '/pages/order/order?activeNum=b',
                         })
@@ -281,16 +224,8 @@ Page({
                             data: {
                                 orderId: this.data.orderId,
                                 state: 2
-                            },
-                            header: { //POST请求一定要加上这个content-type,不然无法传递参数
-                                'content-type': 'application/x-www-form-urlencoded',
-                                'token':wx.getStorageSync('token')
                             }
-                        }).then(res => {
-                            
-                        }).catch(err => {
-
-                        })
+                        });
                         wx.reLaunch({
                             url: '/pages/order/order?activeNum=c',
                         })

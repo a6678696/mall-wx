@@ -2,7 +2,6 @@
 import Dialog from '@vant/weapp/dialog/dialog';
 import Notify from '@vant/weapp/notify/notify';
 import {
-    getBaseUrl,
     requestUtil
 } from '../../utils/requestUtil.js'
 
@@ -15,6 +14,10 @@ Page({
         addressList: []
     },
 
+    /**
+     * 打开修改页面
+     * @param {*} e 
+     */
     openModifyPage(e) {
         wx.navigateTo({
             url: '/pages/address-modify/address-modify?id=' + e.currentTarget.dataset.id,
@@ -39,60 +42,29 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-        requestUtil({
+        this.getAddressList();
+    },
+
+    /**
+     * 获取当前用户所有收货地址
+     */
+    async getAddressList() {
+        const res = await requestUtil({
             url: '/address/listNoPage',
             method: 'GET',
             data: {
                 customerId: wx.getStorageSync('currentCustomer').id
-            },
-            header:{
-                'token':wx.getStorageSync('token')
             }
-        }).then(res => {
-            this.setData({
-                addressList: res.data.addressList
-            })
-        }).catch(err => {
-
+        });
+        this.setData({
+            addressList: res.data.addressList
         })
     },
 
     /**
-     * 生命周期函数--监听页面隐藏
+     * 改变默认地址
+     * @param {*} e 
      */
-    onHide() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom() {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
-
-    },
-
-    //改变默认地址
     selectAddress(e) {
         const index = e.currentTarget.dataset.index;
         let addressList = this.data.addressList;
@@ -113,10 +85,6 @@ Page({
                     data: {
                         customerId: wx.getStorageSync('currentCustomer').id,
                         addressId: addressList[index].id,
-                    },
-                    header: { //POST请求一定要加上这个content-type,不然无法传递参数
-                        'content-type': 'application/x-www-form-urlencoded',
-                        'token':wx.getStorageSync('token')
                     }
                 }).then(res => {
                     for (let i = 0; i < addressList.length; i++) {
@@ -132,7 +100,7 @@ Page({
                         return b.isSelected - a.isSelected;
                     });
                     this.setData({
-                        addressList: addressList
+                        addressList
                     });
                     Notify({
                         type: 'success',
@@ -148,6 +116,10 @@ Page({
             });
     },
 
+    /**
+     * 删除收货地址
+     * @param {*} e 
+     */
     deleteAddress(e) {
         Dialog.confirm({
                 title: '提示',
@@ -161,10 +133,6 @@ Page({
                     method: 'POST',
                     data: {
                         addressId: id
-                    },
-                    header: { //POST请求一定要加上这个content-type,不然无法传递参数
-                        'content-type': 'application/x-www-form-urlencoded',
-                        'token':wx.getStorageSync('token')
                     }
                 }).then(res => {
                     Notify({

@@ -6,9 +6,6 @@ import {
 
 Page({
 
-    /**
-     * 页面的初始数据
-     */
     data: {
         baseUrl: '',
         goodsList: []
@@ -39,140 +36,76 @@ Page({
         }
     },
 
-    // 分类页面使用
-    loadDataCategory(smallTypeId) {
-        requestUtil({
+    /**
+     * 分类页面使用
+     * @param {*} smallTypeId 
+     */
+    async loadDataCategory(smallTypeId) {
+        const res = await requestUtil({
             url: '/goods/listNoPage',
             method: 'GET',
             data: {
                 smallTypeId: smallTypeId
-            },
-            header:{
-                'token':wx.getStorageSync('token')
             }
-        }).then(res => {
-            this.setData({
-                goodsList: res.data.goodsList
-            })
-        }).catch(err => {
-
+        });
+        this.setData({
+            goodsList: res.data.goodsList
         })
     },
 
-    // 搜索商品时使用
-    loadDataSearchGoods(searchWord) {
-        requestUtil({
+    /**
+     * 搜索商品时使用
+     * @param {*} searchWord 
+     */
+    async loadDataSearchGoods(searchWord) {
+        const res = await requestUtil({
             url: '/goods/listNoPage',
             method: 'GET',
             data: {
                 name: searchWord
-            },
-            header:{
-                'token':wx.getStorageSync('token')
             }
-        }).then(res => {
-            this.setData({
-                goodsList: res.data.goodsList
-            })
-        }).catch(err => {
-
+        });
+        this.setData({
+            goodsList: res.data.goodsList
         })
     },
 
-    loadDataGoodsListNew() {
-        requestUtil({
+    /**
+     * 新品页面使用
+     */
+    async loadDataGoodsListNew() {
+        const res = await requestUtil({
             url: '/goods/getNewGoodsList',
-            method: 'GET',
-            header:{
-                'token':wx.getStorageSync('token')
-            }
-        }).then(res => {
-            this.setData({
-                goodsList: res.data.goodsList
-            })
-        }).catch(err => {
-
+            method: 'GET'
+        });
+        this.setData({
+            goodsList: res.data.goodsList
         })
     },
 
-    loadDataGoodsListHot() {
-        requestUtil({
+    /**
+     * 热卖页面使用
+     */
+    async loadDataGoodsListHot() {
+        const res = await requestUtil({
             url: '/goods/getHotGoodsList',
-            method: 'GET',
-            header:{
-                'token':wx.getStorageSync('token')
-            }
-        }).then(res => {
-            this.setData({
-                goodsList: res.data.goodsList
-            })
-        }).catch(err => {
-
+            method: 'GET'
+        });
+        this.setData({
+            goodsList: res.data.goodsList
         })
     },
 
-    loadDataGoodsListPriceDrop(){
-        requestUtil({
+    /**
+     * 降价商品页面使用
+     */
+    async loadDataGoodsListPriceDrop() {
+        const res = await requestUtil({
             url: '/goods/getPriceDropGoodsList',
-            method: 'GET',
-            header:{
-                'token':wx.getStorageSync('token')
-            }
-        }).then(res => {
-            this.setData({
-                goodsList: res.data.goodsList
-            })
-        }).catch(err => {
-
+            method: 'GET'
+        });
+        this.setData({
+            goodsList: res.data.goodsList
         })
     },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom() {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
-
-    }
 })

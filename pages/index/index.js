@@ -14,45 +14,44 @@ Page({
 
     onShow() {
         this.getTabBar().init(0);
+        this.checkToken();
     },
-    // 获取首页轮播图图片
-    getSwiperImageList() {
+
+    /**
+     * 获取首页轮播图图片
+     */
+    async getSwiperImageList() {
         let swiperImageList = new Array();
-        requestUtil({
+        const res = await requestUtil({
             url: '/goods/getIndexSwiperGoodsList',
-            method: 'GET',
-            header: {
-                'token': wx.getStorageSync('token')
+            method: 'GET'
+        });
+        let goodsList = res.data.goodsList;
+        for (let i = 0; i < goodsList.length; i++) {
+            //只展示前6个首页轮播图商品
+            if (i === 6) {
+                break;
             }
-        }).then(res => {
-            let goodsList = res.data.goodsList;
-            for (let i = 0; i < goodsList.length; i++) {
-                //只展示前6个首页轮播图商品
-                if (i === 6) {
-                    break;
-                }
-                swiperImageList[i] = {
-                    imageUrl: this.data.baseUrl + '/image/goods/swiper/' + goodsList[i].goodsDetailsSwiperImageStr.split(',')[1],
-                    url: '/pages/goods/goods?id=' + goodsList[i].id
-                }
+            swiperImageList[i] = {
+                imageUrl: this.data.baseUrl + '/image/goods/swiper/' + goodsList[i].goodsDetailsSwiperImageStr.split(',')[1],
+                url: '/pages/goods/goods?id=' + goodsList[i].id
             }
-            this.setData({
-                swiperImageList
-            })
+        }
+        this.setData({
+            swiperImageList
         })
     },
-    //获取推荐商品列表
-    getRecommendGoodsList() {
-        requestUtil({
+
+    /**
+     * 获取推荐商品列表
+     */
+    async getRecommendGoodsList() {
+        const res = await requestUtil({
             url: '/goods/getRecommendGoodsList',
-            method: 'GET',
-            header: {
-                'token': wx.getStorageSync('token')
-            }
-        }).then(res => {
-            this.setData({
-                recommendGoodsList: res.data.goodsList
-            })
+            method: 'GET'
+        });
+        this.setData({
+            recommendGoodsList: res.data.goodsList
         })
     },
 
@@ -61,43 +60,44 @@ Page({
         this.setData({
             baseUrl
         });
-        this.checkToken();
     },
 
-    checkToken() {
+    /**
+     * 验证token
+     */
+    async checkToken() {
         let flag = true;
         if (wx.getStorageSync('token') !== null) {
-            requestUtil({
+            const res = await requestUtil({
                 url: '/token/check',
                 method: 'GET',
                 data: {
                     token: wx.getStorageSync('token')
-                },
-                header: {
-                    'token': wx.getStorageSync('token')
                 }
-            }).then(result => {
-                //token验证成功
-                if (result.data.code === 0) {
-                    if (result.data.roleName !== 'customer') {
-                        flag = false;
-                        console.log('当前用户身份不是customer');
-                        wx.removeStorageSync('token');
-                        wx.removeStorageSync('currentCustomer');
-                    } else {
-                        flag = true;
-                    }
-                } else if (result.data.code === 500) {
+            });
+            //token验证成功
+            if (res.data.code === 0) {
+                if (res.data.roleName !== 'customer') {
                     flag = false;
-                    console.log("token验证失败");
+                    console.log('当前用户身份不是customer');
                     wx.removeStorageSync('token');
                     wx.removeStorageSync('currentCustomer');
+                } else {
+                    flag = true;
                 }
-                this.login();
-            })
+            } else if (res.data.code === 500) {
+                flag = false;
+                console.log("token验证失败");
+                wx.removeStorageSync('token');
+                wx.removeStorageSync('currentCustomer');
+            }
+            this.login();
         }
     },
 
+    /**
+     * 顾客登录
+     */
     login() {
         //当顾客未登录时
         if (!wx.getStorageSync('currentCustomer')) {
@@ -110,10 +110,6 @@ Page({
                         method: 'POST',
                         data: {
                             loginCode: res.code
-                        },
-                        header: { //POST请求一定要加上这个content-type,不然无法传递参数
-                            'content-type': 'application/x-www-form-urlencoded',
-                            'token': wx.getStorageSync('token')
                         }
                     }).then(result => {
                         //后端返回一个customer对象

@@ -30,55 +30,9 @@ Page({
     },
 
     /**
-     * 生命周期函数--监听页面初次渲染完成
+     * 顾客选择图片后上传到服务器
+     * @param {*} event 
      */
-    onReady() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom() {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
-
-    },
-
-    //顾客选择图片后上传到服务器
     afterRead(event) {
         const {
             file
@@ -108,51 +62,42 @@ Page({
         });
     },
 
-    // 顾客删除图片后从服务器中删除
-    deleteImage() {
+    /**
+     * 顾客删除图片后从服务器中删除
+     */
+    async deleteImage() {
         let url = this.data.fileList[0].url;
-        requestUtil({
+        await requestUtil({
             url: '/customer/deleteImage',
             method: 'GET',
             data: {
                 url: url
-            },
-            header:{
-                'token':wx.getStorageSync('token')
             }
-        }).then(res => {
-            this.setData({
-                fileList: []
-            })
-        }).catch(err => {
-
+        });
+        this.setData({
+            fileList: []
         })
     },
 
-    //修改个人信息
-    update() {
-        requestUtil({
+    /**
+     * 修改个人信息
+     */
+    async update() {
+        const res = await requestUtil({
             url: '/customer/update',
             method: 'POST',
             data: {
                 id: this.data.id,
                 nickName: this.data.nickName,
                 url: this.data.fileList.length === 0 ? '' : this.data.fileList[0].url
-            },
-            header: { //POST请求一定要加上这个content-type,不然无法传递参数
-                'content-type': 'application/x-www-form-urlencoded',
-                'token': wx.getStorageSync('token')
             }
-        }).then(res => {
-            let currentCustomer = {
-                id: res.data.customer.id,
-                nickName: res.data.customer.nickName,
-                avatarImageName: res.data.customer.avatarImageName
-            }
-            wx.navigateBack();
-            wx.setStorageSync('currentCustomer', currentCustomer);
-        }).catch(err => {
-
-        })
+        });
+        let currentCustomer = {
+            id: res.data.customer.id,
+            nickName: res.data.customer.nickName,
+            avatarImageName: res.data.customer.avatarImageName
+        }
+        wx.setStorageSync('currentCustomer', currentCustomer);
+        wx.navigateBack();
     }
 })

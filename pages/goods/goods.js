@@ -7,10 +7,6 @@ import {
 } from '../../utils/requestUtil.js'
 
 Page({
-
-    /**
-     * 页面的初始数据
-     */
     data: {
         baseUrl: '',
         id: 0,
@@ -36,55 +32,46 @@ Page({
         this.loadData(options.id);
     },
 
-    //加载数据
-    loadData(id) {
+    /**
+     * 加载数据
+     * @param {*} id 
+     */
+    async loadData(id) {
         let swiperImageList = [];
         //获取商品信息
-        requestUtil({
+        const res = await requestUtil({
             url: '/goods/findById',
             method: 'GET',
             data: {
                 id: id
-            },
-            header:{
-                'token':wx.getStorageSync('token')
             }
-        }).then(res => {
-            for (let i = 0; i < res.data.goods.swiperImageNameList.length; i++) {
-                if (res.data.goods.swiperImageNameList[i] !== '') {
-                    swiperImageList[i] = {
-                        imageUrl: res.data.goods.swiperImageNameList[i]
-                    }
+        });
+        for (let i = 0; i < res.data.goods.swiperImageNameList.length; i++) {
+            if (res.data.goods.swiperImageNameList[i] !== '') {
+                swiperImageList[i] = {
+                    imageUrl: res.data.goods.swiperImageNameList[i]
                 }
             }
-            this.setData({
-                id: res.data.goods.id,
-                goodsName: res.data.goods.name,
-                price: res.data.goods.price,
-                salesVolume: res.data.goods.salesVolume,
-                cardImageName: res.data.goods.cardImageName,
-                swiperImageList: swiperImageList,
-                details: res.data.goods.details,
-            })
-        }).catch(err => {
-
+        }
+        this.setData({
+            id: res.data.goods.id,
+            goodsName: res.data.goods.name,
+            price: res.data.goods.price,
+            salesVolume: res.data.goods.salesVolume,
+            cardImageName: res.data.goods.cardImageName,
+            swiperImageList: swiperImageList,
+            details: res.data.goods.details,
         })
         //获取评价
-        requestUtil({
+        const result = await requestUtil({
             url: '/valuation/listNoPage',
             method: 'GET',
             data: {
                 goodsId: id
-            },
-            header:{
-                'token':wx.getStorageSync('token')
             }
-        }).then(res => {
-            this.setData({
-                valuationList: res.data.valuationList
-            })
-        }).catch(err => {
-
+        });
+        this.setData({
+            valuationList: result.data.valuationList
         })
     },
 
@@ -133,18 +120,14 @@ Page({
         })
     },
 
+    /**
+     * 跳转到购物车页面
+     */
     toCart() {
         this.addGoodsToCart();
         wx.navigateTo({
             url: '/pages/cart/cart',
         })
-    },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady() {
-
     },
 
     /**
@@ -157,40 +140,5 @@ Page({
                 goodsNum: wx.getStorageSync('carts').length
             })
         }
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom() {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
-
     }
 })
